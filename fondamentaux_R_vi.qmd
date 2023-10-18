@@ -62,7 +62,7 @@ library("plm") # Linear Models for Panel Data and robust covariance matrices
 library("broom") # pour reformater simplement les rendus de tests statistiques
 library("stargazer") # Reformater de manière plus lisible les résumé des régressions
 library("MatchIt") # Pour le matching
-library("glm") # Modèles linéaires généralisés (pour le PSM)
+#library("glm") # Modèles linéaires généralisés (pour le PSM)
 library("optmatch") # Fonctions d'optimisation du matching
 library("did") # Méthode de double différence échelonnée de Callaway et Sant'Anna
 library("mapme.biodiversity")
@@ -165,7 +165,6 @@ d <- a %>%
   ajoute(b) %>%
   ajoute(c)
 
-d
 ```
 
 
@@ -227,7 +226,6 @@ Certaines opérations particulières requièrent des connaissances plus approfon
 -   Jointures : fusionner deux tableaux par une variable d'identification ("clé") 
 
 ```{r}
-
 # Tableau clients
 clients <- data.frame(ID = c(1, 2, 3, 4),
                       nom_client = c("Alice", "Bob", "Charlie", "David"))
@@ -313,13 +311,12 @@ df_long_2 <- df_long %>%
 Un point important est relatif aux types des variables : numérique, catégorielles, textes, dates, spatiales... En général, les opérations ne peuvent concerner que des variables du même type. Les fonctions sont souvent contraignantes quant aux types des variables qu'elles prennent comme arguments.
 
 ```{r}
-
 # Exemple avec une variable numérique et une variable caractère
 x <- 5
 y <- "hello"
 
 # Tentative d'addition de deux variables de types différents
-resultat <- x + y
+#resultat <- x + y
 
 ```
 
@@ -335,25 +332,35 @@ Pour une analyse plus approfondie, voir juba.
 library(sf) # pour traiter des données spatiales
 library(tmap) # pour faire des cartes
 
-# Charger une carte des 
-carte <- st_read("data/Vahatra/Vahatra98AP.shp") %>%
-  st_make_valid()
+# Charger une carte des données WDPA 
 
-# On projette la carte
-tm_shape(carte) +
-  tm_polygons(col = "cat__iucn") +
+# On regarde si les données WDPA sont disponibles sur l'ordinateur qui exécute
+if (file.exists("data/WDPA/WDPA_Oct2023_MDG-shapefile.zip")) {
+  # Si oui, on charge
+  WDPA_Mada <- wdpa_read("data/WDPA/WDPA_Oct2023_MDG-shapefile.zip")
+} else {
+  # Si non, on télécharge depuis protectedplanet
+  WDPA_Mada <- wdpa_fetch("Madagascar", wait = TRUE,
+                      download_dir = "data/WDPA") 
+}
+  
+  # On projette la carte
+tm_shape(WDPA_Mada) +
+  tm_polygons(col = "IUCN_CAT") +
   tmap_options(check.and.fix = TRUE) + # Parce qu'on a quelques erreurs topo
   tm_layout(legend.outside = TRUE)
 
 ```
 
+(projection de la carte, obligatoire de faire st_make_valid ?)
 ## Produire des graphiques avec R
 
 On utilise le package ggplot, avec la syntaxe suivante.
 
 ```{r}
 # On réalise un graphique simple
-carte %>%
-  ggplot(aes(x = cat__iucn, y = hectares)) +
+WDPA_Mada %>%
+  ggplot(aes(x = IUCN_CAT, y = REP_AREA)) +
   geom_col()
+
 ```

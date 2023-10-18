@@ -1,4 +1,4 @@
-PARTIE GENERALE : MATIN
+# PARTIE TABLE ATTRIBUTAIRE (MATIN)
 
 # EXHAUSTIVITE DES LIBRAIRIES
 
@@ -96,7 +96,7 @@ summary(AP_Vahatra$superficie_km2)
 # Aires protégées de superficie supérieure ou égale au 3ème quartile
 AP_Vahatra %>%
   filter(superficie_km2 >= 758.975) %>%
-  select(nom) 
+  nrow()
 
 # Aires protégées créées après 2000 et dont la gestion est assurée par l'Etat
 AP_Vahatra %>%
@@ -173,7 +173,6 @@ WDPA_Mada %>%
   tab_header("Valeurs manquantes dans les données WDPA pour Madagascar") %>%
   tab_source_note("Source : WDPA (octobre 2023)")
 
-
 # Comparaison nombres d'aires protégées Vahatra et WDPA
 AP_Vahatra %>%
   distinct(nom) %>%
@@ -183,7 +182,9 @@ WDPA_Mada %>%
   distinct(NAME) %>%
   nrow()
 
-# Faire apparaître les aires protégéés WDPA non présentes dans Vahatra 
+# PARTIE 2 : ANALYSES GEOSPATIALES (APRES-MIDI) 
+
+## Faire apparaître les aires protégéés WDPA non présentes dans Vahatra 
 WDPA_exclu <- WDPA_Mada %>%
   filter(!(NAME %in% AP_Vahatra$nom_wdpa))
 
@@ -192,32 +193,8 @@ WDPA_exclu %>%
   tm_shape() +
   tm_polygons(col = "IUCN_CAT")
 
-# On garde les aires protégées de WDPA qui apparaissent dans Vahatra
-WDPA_commun <- WDPA_Mada %>%
-  filter(NAME %in% AP_Vahatra$nom_wdpa) %>%
-  filter(!(NAME == "Analalava" & IUCN_CAT == "Not Reported")) %>%
-  filter(!(NAME == "Site Bioculturel d'Antrema" & IUCN_CAT == "Not Reported")) %>%
-  filter(DESIG != "UNESCO-MAB Biosphere Reserve") %>%
-  arrange(NAME)  %>%
-  mutate(rownum = row_number())
 
-# Cette fonction calcule la part d'un polygone incluse dans un 
-# autre polygone et retourne un ratio entre 0 et 1
-ratio_inclus <- function(x, y) {
-  inclus <- st_intersection(x, y)
-  ratio <- st_area(inclus) / st_area(x)
-  return(ratio)
-}
-
-# On calcule la part des polygones Vahatra incluse dans les polgones WDPA 
-V_in_W <- map2_dbl(WDPA_commun$geometry, AP_Vahatra$geometry, ratio_inclus)
-# Puis l'inverse
-W_in_V <- map2_dbl(AP_Vahatra$geometry, WDPA_commun$geometry, ratio_inclus)
-
-
-
-
-# PARTIE GEOSPATIALE : APRES-MIDI 
+(PARTIE COMPARAISON?)
 
 # On télécharge les communes depuis la base GADM
 

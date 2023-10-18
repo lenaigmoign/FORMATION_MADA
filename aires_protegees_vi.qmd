@@ -1,18 +1,20 @@
-----
+---
 output: html_document
 editor_options: 
   chunk_output_type: console
 ---
 
-# Aires protégées
+# Données attributaires des aires protégées
 
 ## Données de l'association Vahatra
 
-Les études sur les aires protégées s'appuient fréquemment sur la base WDPA (World Database on Protected Area), consultable en ligne sur https://protectedplanet.net. On s'aperçoit dans le cas de Madagascar que cette base de données comporte de nombreuses erreurs (qu'on étudiera plus bas). La base rassemblée par l'association Vahatra dans le cadre de la monographie qu'elle a coordonnée sur l'ensemble des aires protégées terrestres malgaches semble beaucoup plus fiable [@goodman_les_2018]. Les données en question sont disponibles sur le portail https://protectedareas.mg avec une licence creative commons (CC-BY).
+Les études sur les aires protégées s'appuient fréquemment sur la base WDPA (World Database on Protected Area), consultable en ligne sur https://protectedplanet.net. On s'aperçoit, dans le cas de Madagascar, que cette base de données comporte de nombreuses erreurs (qu'on étudiera plus bas). La base rassemblée par l'association Vahatra dans le cadre de la monographie qu'elle a coordonnée sur l'ensemble des aires protégées terrestres malgaches semble beaucoup plus fiable [@goodman_les_2018]. Les données en question sont disponibles sur le portail https://protectedareas.mg avec une licence creative commons (CC-BY).
 
-Le bloc de code ci-dessous (cliquer sur "code" pour visualiser), présente la séquence d'opérations réalisées pour préparer les données.Pour comprendre certaines opérations contenues dans le bloc de code, il est utile d'être familier de la syntaxe de R et des packages du tidyverse. Voir le chapitre @sec-fondamentaux.
+Le bloc de code ci-dessous (cliquer sur "code" pour visualiser), propose différentes d'opérations pour explorer, épurer et préparer les données avant analyse.
 
-```{r Préparation aires protégées}
+Pour comprendre certaines opérations contenues dans le bloc de code, il est utile d'être familier de la syntaxe de R et des packages du tidyverse. Voir le chapitre @sec-fondamentaux.
+
+```{r Préparation librairies aires protégées}
 
 library(tidyverse)
 library(lubridate)
@@ -22,111 +24,98 @@ library(geodata)
 library(cowplot)
 library(wdpar)
 library(gt) 
+library(readxl)
 
-# Le shapefile est composé d'une série de fichiers, (.shp, .dbf, .prj, .shx)
-# qui doivent avoir le même nom et être au même endroits pour être ouverts en
-# même temps. Comme souvent, ils sont compressés ensemble dans un fichier zip.
-# On commence par dézipper (décompresser) ce fichier.
-unzip("data/Vahatra98AP.zip", exdir = "data/Vahatra")
-# On importe dans R en pointant vers le fichier .shp, mais c'est bien toute la
-# collection de fichiers homonymes .shp, .dbf, .shx qui est chargée.
-AP_Vahatra <- st_read("data/Vahatra/Vahatra98AP.shp", quiet = TRUE) %>%
-  # Il manque la projection (pas de fichier .prj), on la spécifie à la main
-  st_set_crs("EPSG:4326") %>% # EPSG 4325 = WSG 84 = le standard pour le web
-  st_make_valid() # fiabilise qu'il n'y a pas d'erreurs topologiques
+# On enregistre la table attributaire comme nouvel objet
+AP_Vahatra <- read_xlsx("data/Vahatra/ch1_AP_Vahatra.xlsx")
 
-# dir.create("AP_Vahatra")
-# st_write(AP_Vahatra, "out/AP_Vahatra.shp")
-# writexl::write_xlsx(st_drop_geometry(AP_Vahatra), "AP_Vahatra.xlsx")
+# On prend connaissance des différentes variables avec le nom des colonnes
+colnames(AP_Vahatra)
+
+# On peut aussi faire apparaître le nom des 10 premières  aires protégées et leur catégorie IUCN 
+
+AP_Vahatra %>%
+  select(nom, cat_iucn) %>%
+  filter(row_number() <= 10) %>%
+  gt()
+
 ```
 
-Le bloc de code suivant génère une carte interactive. On a également inclus des lignes de code qui permettent de formater la carte joliment pour un rendu figé (pdf/LaTeX, html statique, word), mais ce code est "commenté", c'est-à-dire qu'on a placé des dièses au début de chaque ligne, de sorte qu'il ne s'exécute pas (R n'exécute jamais ce qui se trouve à droite d'un \# sur une ligne). Pour plus de détails sur la manière dont on produit des cartes, voire la section "Cartes simples avec R" dans le chapitre @sec-fondamentaux.
+> Exercices : à l'aide des fonctions du tidyverse
+1. Faire apparaître le nom des parcs nationaux de catégorie II "list_PN"
+2. Créer une colonne avec la superficie de chaque aire en km2
+
+On peut continuer à arranger les données en fonction des variables de notre choix, en l'occurence si la superficie en km² nous intéresse : 
 
 ```{r}
-# On regarde si les frontières terrestres de Mada ont déjà été téléchargées
-if (file.exists("data/contour_mada.rds")) {
-  # Si c'"est le cas, on charge la version déjà disponible localement
-  load("data/contour_mada.rds")
-} else {
-  # Sinon on la télécharge depuis la base GADM
-  contour_mada <- gadm(country = "Madagascar", resolution = 1, level = 0,
-                     path = "data/GADM") %>%
-  st_as_sf()
-# On enregistre contour_mada pour s'en servir par la suite
-save(contour_mada, file = "data/contour_mada.rds")
-}
 
-# On génère un rendu cartographique
-tmap_mode("view") # En mode interactif
-tm_shape(contour_mada) +
-  tm_borders() +
-  tm_shape(AP_Vahatra) + 
-  tm_polygons(col = "cat_iucn", alpha = 0.6, title = "Catégorie IUCN",
-              id = "nom",
-              popup.vars = c("Acte de création" = "creation",
-                             "Année de création" = "an_creation",
-                             "Surface (ha)" = "hectares",
-                             "Nom complet" = "full_name",
-                             "Gestionnaire" = "gest_1")) +
-  tmap_options(check.and.fix = TRUE)
+# Tri des données de manière décroissante en fonction de la superficie en km²
+AP_Vahatra <- AP_Vahatra %>%
+  arrange(desc(superficie_km2))
+
+# Obtenir les 3 plus grandes aires protégées 
+AP_Vahatra %>% 
+  slice_head(n = 3) %>%
+  select(nom)
+
+# Obtenir la superficie totale de toutes les aires protégées 
+AP_Vahatra %>%
+  summarise(sum(AP_Vahatra$superficie_km2))
+
+# Résumé statistique des superficies en km² 
+summary(AP_Vahatra$superficie_km2)
+
 ```
 
-On peut également réaliser un graphique qui présente l'historique de création des aires protégées. Pour plus de précisions sur la manière de produire des graphiques en R, voir l'annexe correspondante (@sec-fondamentaux).
+> Exercices : à l'aide des fonctions du tidyverse
+1. Combien il y a-t-il d'aires protégées qui ont une surface plus grande que le 3ème quartile ?
+2. Quel est le nom des aires protégées créées après 2000 et dont la gestion est assurée par l'Etat ?
+
+Si on s'intéresse par exemple à 2 variables : "superficie" et "catégorie IUCN". On peut calculer, pour chaque catégorie, la superficie totale d'aires protégées pour avoir une vue d'ensemble.
 
 ```{r}
-#| fig-height: 12 
-# On ordonne les nom d'aires protégées dans l'ordre de leur séquence de création
-ordre_chrono_AP <- AP_Vahatra %>%
-  arrange(desc(date_creation), desc(nom)) %>%
-  pull(nom)
-# On transforme le champ "nom" de caractère, à une catégorisation ordonnée où
-# l'ordre correspond 
-AP_Vahatra_carte <- AP_Vahatra %>%
-  mutate(nom = factor(nom, levels = ordre_chrono_AP),
-         cat_taille = case_when(hectares > 300000 ~ 2,
-                                hectares > 150000 ~ 1.5,
-                                hectares >  50000 ~ 1,
-                                             TRUE ~ 0.5)) %>%
-  rename(`Catégorie IUCN` = cat_iucn)
+# Calcul des superficies totales pour chaque catégorie IUCN 
+AP_Vahatra_iucn <- AP_Vahatra %>%
+  filter(!is.na(cat_iucn)) %>%
+  group_by(cat_iucn) %>%
+  summarise(superficie_totale = sum(superficie_km2))
 
-# On crée un graph pour les anciennetés
-graph_gauche <- AP_Vahatra_carte %>%
-  ggplot(aes(x = date_creation, xend = ymd("2022-10-01"), y = nom, yend = nom, 
-                   color = `Catégorie IUCN`)) +
-  geom_segment(size = 2) +
-  ggtitle("Ancienneté") +
-  theme(axis.ticks.y = element_blank(),
-        legend.position = "none",
-        axis.title = element_blank(),
-        axis.text.x.bottom =  element_text(angle = 45, hjust = 1),
-        axis.text.x.top = element_text(angle = -45, hjust = 1)) + 
-  scale_x_date(sec.axis = dup_axis())
+# Production d'un joli tableau synthétique
+AP_Vahatra_iucn %>%
+  mutate(superficie_totale = round(superficie_totale, 2)) %>% # Arrondir les km² 
+gt(AP_Vahatra_iucn) %>%
+  cols_label(
+    cat_iucn = "Catégorie IUCN",
+    superficie_totale = "Superficie totale (km²)"
+  ) %>%
+  tab_header(
+    title = "Aires protégées de Madagascar : superficies par catégorie IUCN"
+  ) %>%
+  tab_source_note(
+    "Source : données de l'association Vahatra"
+  )
 
-graph_droite <- AP_Vahatra_carte %>%
-  ggplot(aes(x = 0, xend = hectares/100, y = nom, yend = nom, 
-                   color = `Catégorie IUCN`)) +
-  geom_segment(size = 2) + 
-  ggtitle("Surface (km2)") +
-  theme(axis.text.y = element_blank(),
-        axis.title = element_blank(),
-        axis.text.x.bottom =  element_text(angle = 45, hjust = 1),
-        axis.text.x.top = element_text(angle = -45, hjust = 0),
-        legend.position = "none") + 
-  scale_x_continuous(sec.axis = dup_axis())
 
-legende <- get_legend(graph_gauche  +
-                        guides(color = guide_legend(nrow = 1)) +
-                        theme(legend.position = "bottom"))
-
-# On colle les deux
-graphs <- plot_grid(graph_gauche, graph_droite, rel_widths = c(2.2, 1),
-          nrow = 1)
-plot_grid(graphs, legende, ncol = 1,
-          rel_heights = c(1,.1))
 ```
 
-Il faut aussi s'assurer qu'on filtre bien les entités analysées selon un critère pertinent. Actuellement, on exclut les aires marines. Il pourrait toutefois sembler utile d'écarter les aires dont le statut de protection est considéré comme trop faible. Il pourrait aussi être pertinent de ne garder que les aires protégées comportant un niveau minimum de couvert forestier : autrement, cela signifie que la forêt n'est pas un habitat pertinent pour les écosystèmes que la démarche de conservation cherche à protéger dans cette aire.
+Si maintenant on s'intéresse à la dynamique de création d'aires protégées, on peut croiser les données correspondant à l'année de création avec celles de superficie. 
 
+```{r}
+# Calcul de la superficie cumulée en fonction des années
+AP_superficie_annees <- AP_Vahatra %>%
+  group_by(an_creation) %>% # On regroupe d'abord les AP qui ont été créées la même année
+  summarise(superficie_cumulée = sum(superficie_km2)) %>% # On fait la somme de ces superficies (par année de création)
+  mutate(superficie_cumulée = cumsum(superficie_cumulée)) # Pour le rendu graphique (cumulatif), on accumule les superficies de chaque groupe (année de création X) avec le groupe précédent (X -1)
+
+## Création d'un graphique de dispersion linéaire (points et ligne de raccordement) 
+ggplot(data = AP_superficie_annees, aes(x = an_creation, y = superficie_cumulée)) +
+  geom_point() +
+  geom_line() +
+  labs(x = "Année de création de l'aire protégée", y = "Superficie cumulée (km²)") +
+  ggtitle("Superficie cumulée en fonction de l'année de création") +
+  theme_minimal()
+
+```
 ## World Database on Protected Areas
 
 On commence par télécharger et présenter ces données.
@@ -142,25 +131,18 @@ if (file.exists("data/WDPA/WDPA_Oct2022_MDG-shapefile.zip")) {
                       download_dir = "data/WDPA") 
 }
 
-tm_shape(contour_mada) +
-  tm_borders() +
-  tm_shape(WDPA_Mada) + 
-  tm_polygons(col = "IUCN_CAT", alpha = 0.6, title = "Catégorie IUCN",
-              id = "NAME",
-              popup.vars = c("Type" = "DESIG",
-                             "Catégorie UICN" = "IUCN_CAT",
-                             "Surface déclarée" = "REP_AREA",
-                             "Année du statut" = "STATUS_YR")) +
-  tmap_options(check.and.fix = TRUE)
-
+# On prend connaissance des différentes variables
+colnames(WDPA_Mada)
 ```
 
-En observant les métadonnées associées aux aires protégées dans la carte interactive ci-dessus, on s'aperçoit que de nombreuses informations sont manquantes. On passe en revue la complétude des données issues de WDPA.
+> Exercice : trouver signification de ces noms de colonnes, que représentent-elles réellement ? 
+
+Une technique pour connaître la fiabilité des données est de recenser les valeurs manquantes. L'ensemble peut être synthétisé sous forme de tableau. 
 
 ```{r}
 # Résumé des valeurs manquantes
 WDPA_Mada %>%
-  st_drop_geometry() %>%
+  st_drop_geometry() %>% #obligatoire 
   summarise(`Nombre total d'aires protégées` = n(),
             `Catégorie IUCN manquante` = sum(IUCN_CAT == "Not Reported"),
             `Année de création manquante` = sum(STATUS_YR == 0),
@@ -170,142 +152,11 @@ WDPA_Mada %>%
                values_to = "Nombre d'aires") %>%
   gt() %>%
   tab_header("Valeurs manquantes dans les données WDPA pour Madagascar") %>%
-  tab_source_note("Source : WDPA (octobre 2022)")
+  tab_source_note("Source : WDPA (octobre 2023)")
+
 ```
 
-Outre le problème des données manquantes, on remarque sur la carte interactive ci-dessus que plusieurs aires protégées de la base WDPA se superposent les unes aux autres. Afin de jauger l'empleur de ces superpositions, on calcule tout d'abord la somme des surfaces des aires protégéés enregistrées dans la base WDPA, puis on la compare à leur emprise totale, sans doublon.
-
-```{r}
-
-# On ne garde que les polygones (sans les points)
-WDPA_Mada_poly <- WDPA_Mada %>% 
-  filter(st_geometry_type(.) == "MULTIPOLYGON")
-
-# On ne garde que les parties terrestres
-WDPA_Mada_poly_terrestre <- WDPA_Mada_poly %>%
-  st_intersection(contour_mada)
-
-# On calcule le total des surfaces de chaque aires
-surface_cumul <- WDPA_Mada_poly_terrestre %>%
-  mutate(surface = st_area(.)) %>%
-  st_drop_geometry() %>% 
-  summarise(surface = sum(surface, na.rm = TRUE)) %>%
-  mutate(`Type de cumul` = "Somme des surfaces terrestres de chaque aire protégée",
-         .before = everything())
-
-library(units)
-surface_tot <- WDPA_Mada_poly_terrestre %>%
-  st_union() %>%
-  st_as_sf() %>% 
-  mutate(surface = st_area(.)) %>%
-  st_drop_geometry() %>% 
-  summarise(surface = sum(surface, na.rm = TRUE)) %>%
-  mutate(`Type de cumul` = "Emprise totale des aires protégées",
-         .before = everything())
-
-compare_surfaces <- surface_cumul %>%
-  bind_rows(surface_tot) %>%
-  mutate(surface = set_units(surface, "hectares"),
-         surface = as.numeric(surface)) %>%
-  rename(`Surface (ha)` = surface)
-
-compare_surfaces %>%
-  gt() %>%
-  fmt_number(columns = `Surface (ha)`, use_seps = TRUE, decimals = 0) %>% 
-  tab_header(title = "Superposition des aires WDPA",
-             subtitle = "Somme des surfaces d'aires vs. emprise totale") %>%
-  tab_source_note("Source : WDPA (oct. 2022), calculs des auteurs")
-  
-```
-
-Cela signifie qu'on a de nombreuses aires protégées dans la base WDPA qui se superposent et que leur emprise réelle est bien inférieure à la somme de leurs surfaces. Réaliser des sommes ou des moyennes simples sur l'ensemble de la base WDPA revient à compter plusieurs fois les mêmes zones géographiques.
-
-## Comparaison des données Vahatra et WDPA
-
-On commence par visualiser les différences spatiales entre les polygones, en affichant les 10 qui sont les plus différents entre les WDPA et Vahatra.
-
-```{r}
-#| fig-height: 10
-# On harmonise les noms qui sont parfois notés différemment entre les sources
-AP_Vahatra <- AP_Vahatra %>%
-  mutate(nom_wdpa = case_when(
-    nom == "Corridor Forestier Bongolava" ~ "Corridor forestier Bongolava",
-    nom == "Ranobe PK32" ~ "Ranobe PK 32",
-    str_detect(nom, "Ambositra-Vondrozo") ~ "Corridor Forestier Ambositra Vondrozo",
-    nom == "Réserve deTampolo" ~ "Réserve de Tampolo",
-    nom == "Bombetoka Beloboka" ~ "Bombetoka Belemboka",
-    nom == "Ampananganandehibe-Behasina" ~ "Ampanganandehibe-Behasina",
-    nom == "Forêt Sacrée Alandraza Analavelo" ~ "Analavelona", # vérfié sur carte : les mêmes
-    nom == "Réserve speciale Pointe à Larrée" ~ "Réserve spéciale Pointe à Larrée", 
-    nom == "Vohidava-Betsimalaho" ~ "Vohidava Betsimalao", 
-    nom == "Anjanaharibe Sud" ~ "Anjanaharibe_sud",
-    nom == "Iles Radama/Sahamalaza" ~ "Sahamalaza Iles Radama",
-    nom == "Kalambatritra" ~ "Kalambatrika",
-    nom == "Mananara-Nord" ~ "Mananara Nord",
-    nom == "Kirindy - Mitea" ~ "Kirindy Mite",
-    nom == "Midongy du Sud" ~ "Befotaka Midongy", # Vérifié sur la carte
-    nom == "Montagne d'Ambre/Forêt d'Ambre" ~ "Montagne d'Ambre",
-    nom == "Tsimanampesotsa" ~ "Tsimanampesotse",
-    nom == "Pic d'Ivohibe" ~ "Ivohibe",
-    nom == "Forêt Naturelle de Petriky" ~ "Forêt Naturel de Petriky",
-    nom == "Tsingy de Namoroka" ~ "Namoroka",
-    nom == "Réserve de Ressources Naturelle Mahimborondro" ~ "Mahimborondro",
-    str_detect(nom, "Complexe Tsimembo Manambolomaty") ~ "Complexe Tsimembo Manambolomaty",
-    nom == "Mandrozo" ~ "Zone Humide de Mandrozo",
-    nom == "Paysage Harmonieux Protégés Bemanevika" ~ "Complexe des Zones Humides de Bemanevika",
-    nom == "Nord Ifotaky" ~ "INord fotaky",
-    TRUE ~ nom)) %>%
-  arrange(nom_wdpa) %>%
-  mutate(rownum = row_number())
-
-# On sauvegarde le résultat
-save(AP_Vahatra, file = "data/ch1_AP_Vahatra.rds")
-
-# On ne garde que les aires de WDPA qui apparaissent dans Vahatra
-WDPA_commun <- WDPA_Mada %>%
-  filter(NAME %in% AP_Vahatra$nom_wdpa) %>%
-  filter(!(NAME == "Analalava" & IUCN_CAT == "Not Reported")) %>%
-  filter(!(NAME == "Site Bioculturel d'Antrema" & IUCN_CAT == "Not Reported")) %>%
-  filter(DESIG != "UNESCO-MAB Biosphere Reserve") %>%
-  arrange(NAME)  %>%
-  mutate(rownum = row_number())
-       
-# Cette fonction calcule la part d'un polygone incluse dans un 
-# autre polygone et retourne un ratio entre 0 et 1
-ratio_inclus <- function(x, y) {
-  inclus <- st_intersection(x, y)
-  ratio <- st_area(inclus) / st_area(x)
-  return(ratio)
-}
-
-# On calcule la part des polygones Vahatra incluse dans les polgones WDPA 
-V_in_W <- map2_dbl(WDPA_commun$geometry, AP_Vahatra$geometry, ratio_inclus)
-# Puis l'inverse
-W_in_V <- map2_dbl(AP_Vahatra$geometry, WDPA_commun$geometry, ratio_inclus)
-# On fait un facteur des deux
-recoupement_mutuel <- V_in_W * W_in_V
-# Qu'on ramène dans les jeux de données d'origine
-WDPA_commun2 <- bind_cols(WDPA_commun, V_in_W = V_in_W, W_in_V = W_in_V,
-                         recoupement_mutuel = recoupement_mutuel) %>%
-  arrange(recoupement_mutuel, rownum)
-AP_Vahatra2 <- bind_cols(AP_Vahatra, V_in_W = V_in_W, W_in_V = W_in_V,
-                        recoupement_mutuel = recoupement_mutuel) %>%
-  arrange(recoupement_mutuel, rownum)
-
-# On prend maintenant les 5 les plus éloignés et on les visualise
-min_recoup <- WDPA_commun2 %>%
-  filter(row_number() <= 10) %>%
-  select(nom_wdpa = NAME, rownum) %>%
-  mutate(source = "WDPA") %>%
-  bind_rows(select(filter(AP_Vahatra2, rownum %in% .$rownum), nom_wdpa, rownum)) %>%
-  mutate(source = ifelse(is.na(source), "Vahatra", source))
-tmap_mode("plot")
-min_recoup %>%
-  tm_shape() +
-  tm_polygons() +
-  tm_facets(by = c("nom_wdpa", "source")) +
-  tm_layout(panel.label.size=3)
-```
+> Exercice : combien il y a-t-il d'aires protégées au total dans le jeu de données Vahatra et dans celui du WDPA ? 
 
 On peut également comparer ceux pour lesquels on a des différences de date ou de statut.
 
@@ -337,6 +188,173 @@ verif_meta_wdpa %>%
 
 ```
 
+```
+
+
+
+
+
+# ANALYSES GEOSPATIALES 
+
+Le bloc de code suivant génère une carte interactive. On a également inclus des lignes de code qui permettent de formater la carte joliment pour un rendu figé (pdf/LaTeX, html statique, word), mais ce code est "commenté", c'est-à-dire qu'on a placé des dièses au début de chaque ligne, de sorte qu'il ne s'exécute pas (R n'exécute jamais ce qui se trouve à droite d'un \# sur une ligne). Pour plus de détails sur la manière dont on produit des cartes, voire la section "Cartes simples avec R" dans le chapitre @sec-fondamentaux.
+
+```{r}
+## Faire apparaître les aires protégéés WDPA non présentes dans Vahatra 
+WDPA_exclu <- WDPA_Mada %>%
+  filter(!(NAME %in% AP_Vahatra$nom_wdpa))
+
+tmap_mode("view")
+WDPA_exclu %>%
+  tm_shape() +
+  tm_polygons(col = "IUCN_CAT")
+```
+
+On va représenter le jeu de données Vahatra avec les frontières de Madagascar.  
+
+```{r}
+# On regarde si les frontières terrestres de Mada ont déjà été téléchargées
+if (file.exists("data/contour_mada.rds")) {
+  # Si c'est le cas, on charge la version déjà disponible localement
+  load("data/contour_mada.rds")
+} else {
+  # Sinon on la télécharge depuis la base GADM
+  contour_mada <- gadm(country = "Madagascar", resolution = 1, level = 0,
+                     path = "data/GADM") %>%
+  st_as_sf()
+# On enregistre contour_mada pour s'en servir par la suite
+save(contour_mada, file = "data/contour_mada.rds")
+}
+
+# On génère un rendu cartographique
+# tmap_mode("view") # En mode interactif
+# tm_shape(contour_mada) +
+#   tm_borders() +
+#   tm_shape(AP_Vahatra) + 
+#   tm_polygons(col = "cat_iucn", alpha = 0.6, title = "Catégorie IUCN",
+#               id = "nom",
+#               popup.vars = c("Acte de création" = "creation",
+#                              "Année de création" = "an_creation",
+#                              "Surface (ha)" = "hectares",
+#                              "Nom complet" = "full_name",
+#                              "Gestionnaire" = "gest_1")) +
+#   tmap_options(check.and.fix = TRUE)
+```
+
+> Exercice : reproduire la carte avec les données WDPA
+
+```{r}
+tm_shape(contour_mada) +
+  tm_borders() +
+  tm_shape(WDPA_Mada) + 
+  tm_polygons(col = "IUCN_CAT", alpha = 0.6, title = "Catégorie IUCN",
+              id = "NAME",
+              popup.vars = c("Type" = "DESIG",
+                             "Catégorie UICN" = "IUCN_CAT",
+                             "Surface déclarée" = "REP_AREA",
+                             "Année du statut" = "STATUS_YR")) +
+  tmap_options(check.and.fix = TRUE)
+
+```
+
+Outre le problème des données manquantes, on remarque sur la carte interactive ci-dessus que plusieurs aires protégées de la base WDPA se superposent les unes aux autres. Afin de jauger l'empleur de ces superpositions, on calcule tout d'abord la somme des surfaces des aires protégéés enregistrées dans la base WDPA, puis on la compare à leur emprise totale, sans doublon.
+
+```{r}
+# # On ne garde que les polygones (sans les points)
+# WDPA_Mada_poly <- WDPA_Mada %>% 
+#   filter(st_geometry_type(.) == "MULTIPOLYGON")
+# 
+# # On ne garde que les parties terrestres
+# WDPA_Mada_poly_terrestre <- WDPA_Mada_poly %>%
+#   st_intersection(contour_mada)
+# 
+# # On calcule le total des surfaces de chaque aires
+# surface_cumul <- WDPA_Mada_poly_terrestre %>%
+#   mutate(surface = st_area(.)) %>%
+#   st_drop_geometry() %>% 
+#   summarise(surface = sum(surface, na.rm = TRUE)) %>%
+#   mutate(`Type de cumul` = "Somme des surfaces terrestres de chaque aire protégée",
+#          .before = everything())
+# 
+# library(units)
+# surface_tot <- WDPA_Mada_poly_terrestre %>%
+#   st_union() %>%
+#   st_as_sf() %>% 
+#   mutate(surface = st_area(.)) %>%
+#   st_drop_geometry() %>% 
+#   summarise(surface = sum(surface, na.rm = TRUE)) %>%
+#   mutate(`Type de cumul` = "Emprise totale des aires protégées",
+#          .before = everything())
+# 
+# compare_surfaces <- surface_cumul %>%
+#   bind_rows(surface_tot) %>%
+#   mutate(surface = set_units(surface, "hectares"),
+#          surface = as.numeric(surface)) %>%
+#   rename(`Surface (ha)` = surface)
+# 
+# compare_surfaces %>%
+#   gt() %>%
+#   fmt_number(columns = `Surface (ha)`, use_seps = TRUE, decimals = 0) %>% 
+#   tab_header(title = "Superposition des aires WDPA",
+#              subtitle = "Somme des surfaces d'aires vs. emprise totale") %>%
+#   tab_source_note("Source : WDPA (oct. 2023), calculs des auteurs")
+  
+```
+
+Cela signifie qu'on a de nombreuses aires protégées dans la base WDPA qui se superposent et que leur emprise réelle est bien inférieure à la somme de leurs surfaces. Réaliser des sommes ou des moyennes simples sur l'ensemble de la base WDPA revient à compter plusieurs fois les mêmes zones géographiques.
+
+## Comparaison des données Vahatra et WDPA
+
+On commence par visualiser les différences spatiales entre les polygones, en affichant les 10 qui sont les plus différents entre les WDPA et Vahatra.
+
+```{r}
+#| fig-height: 10
+
+# On ne garde que les aires de WDPA qui apparaissent dans Vahatra
+WDPA_commun <- WDPA_Mada %>%
+  filter(NAME %in% AP_Vahatra$nom_wdpa) %>%
+  filter(!(NAME == "Analalava" & IUCN_CAT == "Not Reported")) %>%
+  filter(!(NAME == "Site Bioculturel d'Antrema" & IUCN_CAT == "Not Reported")) %>%
+  filter(DESIG != "UNESCO-MAB Biosphere Reserve") %>%
+  arrange(NAME)  %>%
+  mutate(rownum = row_number())
+       
+# Cette fonction calcule la part d'un polygone incluse dans un 
+# autre polygone et retourne un ratio entre 0 et 1
+ratio_inclus <- function(x, y) {
+  inclus <- st_intersection(x, y)
+  ratio <- st_area(inclus) / st_area(x)
+  return(ratio)
+}
+
+# On calcule la part des polygones Vahatra incluse dans les polgones WDPA 
+# V_in_W <- map2_dbl(WDPA_commun$geometry, AP_Vahatra$geometry, ratio_inclus)
+# # Puis l'inverse
+# W_in_V <- map2_dbl(AP_Vahatra$geometry, WDPA_commun$geometry, ratio_inclus)
+# # On fait un facteur des deux
+# recoupement_mutuel <- V_in_W * W_in_V
+# # Qu'on ramène dans les jeux de données d'origine
+# WDPA_commun2 <- bind_cols(WDPA_commun, V_in_W = V_in_W, W_in_V = W_in_V,
+#                          recoupement_mutuel = recoupement_mutuel) %>%
+#   arrange(recoupement_mutuel, rownum)
+# AP_Vahatra2 <- bind_cols(AP_Vahatra, V_in_W = V_in_W, W_in_V = W_in_V,
+#                         recoupement_mutuel = recoupement_mutuel) %>%
+#   arrange(recoupement_mutuel, rownum)
+# 
+# # On prend maintenant les 5 les plus éloignés et on les visualise
+# min_recoup <- WDPA_commun2 %>%
+#   filter(row_number() <= 10) %>%
+#   select(nom_wdpa = NAME, rownum) %>%
+#   mutate(source = "WDPA") %>%
+#   bind_rows(select(filter(AP_Vahatra2, rownum %in% .$rownum), nom_wdpa, rownum)) %>%
+#   mutate(source = ifelse(is.na(source), "Vahatra", source))
+# tmap_mode("plot")
+# min_recoup %>%
+#   tm_shape() +
+#   tm_polygons() +
+#   tm_facets(by = c("nom_wdpa", "source")) +
+#   tm_layout(panel.label.size=3)
+```
+
 Dans les cas qu'on peut comparer, les données de l'association Vahatra semblent plus fiables. On va donc privilégier l'utilisation de ces dernières.
 
 On va également visualiser les aires de WDPA qui ne sont pas contenues dans Vahatra.
@@ -350,31 +368,14 @@ WDPA_exclu %>%
   tm_shape() +
   tm_polygons(col = "IUCN_CAT")
 
-ratio_terrestre <- function(x) {
-  inclus <- st_intersection(x, contour_mada$geometry)
-  ratio <- st_area(inclus) / st_area(x)
-  return(ratio)
-}
-
 # On crée un grand polygone avec toutes les AP dans Vahatra
 AP_Vahatra_fusion <- st_union(AP_Vahatra)
 
 # On calcule pour les aires protégées de WDPA qui ne sont pas dans Vahatra
 # dans quelle mesure elles sont terrestres et pas superposées à d'autres AP
 # déjà dans Vahatra
-WDPA_exclu <- WDPA_exclu %>%
-  filter(st_geometry_type(.) == "MULTIPOLYGON") %>%
-  mutate(part_terrestre = map2_dbl(.$geometry, contour_mada$geometry, 
-                                   ratio_inclus),
-         part_deja_autre = map2_dbl(.$geometry, AP_Vahatra_fusion, 
-                                    ratio_inclus))
 
 # On garde celles qui sont au moins 25% terrestre et 75% pas superposées
-WDPA_a_inclure <- WDPA_exclu %>%
-  filter(part_terrestre >= 0.25 & part_deja_autre <= 0.25) %>%
-  mutate(full_name = paste(INT_CRIT, NAME)) %>%
-  select(nom = NAME, WDPAID, full_name, creation = STATUS_YR)
-
 ```
 
 On a visiblement des aires protégées qu'il serait pertinent d'inclure et qui ne sont pas dans Vahatra.
