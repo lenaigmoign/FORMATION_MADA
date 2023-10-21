@@ -26,7 +26,6 @@ On installe R et RStudio :
 
 > A noter : un nombre croissant d'utilisteurs utilise VS Code. C'est une alternative intéressante, pour des utilisateurs déjà confirmés :
 
-
 ## Librairies R
 
 Plusieurs packages R sont utilisées pour ce projet. Les packages dans R sont des extensions de logiciels qui ajoutent des fonctionnalités spécifiques au langage R de base. Ils sont conçus pour faciliter l'analyse de données, la visualisation, la modélisation statistique, et bien plus encore. Les packages sont comme des boîtes à outils virtuelles qui permettent aux utilisateurs d'effectuer des tâches analytiques avancées sans avoir à réinventer la roue à chaque fois. Ils permettent de gagner du temps et de se concentrer sur la résolution de problèmes spécifiques à son domaine d'étude, au lieu de vous soucier de la programmation de fonctions de base.
@@ -69,7 +68,6 @@ library("mapme.biodiversity")
 library("cobalt") # Tables et graphs d'équilibre des groupes de matching
 
 ```
-
 
 ### Notebook Quarto
 
