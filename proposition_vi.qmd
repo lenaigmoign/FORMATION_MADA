@@ -6,73 +6,145 @@ editor:
   markdown: 
     wrap: 72
 ---
-(tableaux excel fournis pour la matinée) 
+
+(tableaux excel fournis pour la matinée)
 
 # 1. Fondamentaux pour l'utilisation de R {#sec-fondamentaux}
 
-# Différences R et Rstudio 
+# Différences R et Rstudio
 
-R est un **langage de programmation** open source spécialisé dans la statistique et l'analyse des données. Il a été créé pour fournir un environnement convivial pour la manipulation, l'analyse et la visualisation des données.
+R est un **langage de programmation** open source spécialisé dans la
+statistique et l'analyse des données. Il a été créé pour fournir un
+environnement convivial pour la manipulation, l'analyse et la
+visualisation des données.Il existe d'autres langages de programmation
+comme Python, JavaScript, Java, C++ etc.
 
-R est utilisé pour effectuer des opérations statistiques, ajuster des modèles, créer des graphiques et effectuer des analyses de données complexes.
+R est utilisé pour effectuer des opérations statistiques, ajuster des
+modèles, créer des graphiques et effectuer des analyses de données
+complexes.
 
-R est extrêmement flexible et extensible grâce à des packages R, qui ajoutent des fonctionnalités supplémentaires.
+R est extrêmement flexible et extensible grâce à des packages R, qui
+ajoutent des fonctionnalités supplémentaires.
 
-RStudio est un **environnement de développement intégré (IDE)** conçu spécifiquement pour travailler avec le langage R. C'est un logiciel qui fournit une interface utilisateur plus conviviale pour écrire, exécuter et gérer des scripts R.
+RStudio est un **environnement de développement intégré (IDE)** conçu
+spécifiquement pour travailler avec le langage R. C'est un logiciel qui
+fournit une interface utilisateur plus conviviale pour écrire, exécuter
+et gérer des scripts R.
 
-RStudio inclut un éditeur de texte avec coloration syntaxique, un gestionnaire de packages, des fenêtres pour l'affichage des graphiques et des données, et bien d'autres fonctionnalités pour améliorer la productivité des utilisateurs R.
+RStudio inclut un éditeur de texte avec coloration syntaxique, un
+gestionnaire de packages, des fenêtres pour l'affichage des graphiques
+et des données, et bien d'autres fonctionnalités pour améliorer la
+productivité des utilisateurs R.
 
-En résumé, R est le langage de programmation sous-jacent pour l'analyse des données, tandis que RStudio est un environnement de développement qui facilite l'utilisation de R. 
+En résumé, R est le langage de programmation sous-jacent pour l'analyse
+des données, tandis que RStudio est un environnement de développement
+qui facilite l'utilisation de R.
 
-# Sources d'apprentissage  
+# Sources d'apprentissage
 
-Il existe de plusieurs ressources en français pour apprendre à coder sur R. Nous vous recommandons en particulier :
+Il existe de plusieurs ressources en français pour apprendre à coder sur
+R. Nous vous recommandons en particulier :
 
--   [Introduction à R et au Tidyverse](https://juba.github.io/tidyverse/index.html)
+-   [Introduction à R et au
+    Tidyverse](https://juba.github.io/tidyverse/index.html)
     [@barnier2022]
--   [utilitR: documentation collaborative sur R de l'INSEE](https://www.book.utilitr.org/index.html) [@utilitr:2022]
+-   [utilitR: documentation collaborative sur R de
+    l'INSEE](https://www.book.utilitr.org/index.html) [@utilitr:2022]
 
-Les bonnes ressources anglophones gratuites sont très nombreuses, très faciles à trouver sur le Web. Le grand classique est R for data science, de Grolemund et Wickham [-@grolemund2022]. On se focalise ici avec deux autres qui sont le plus en lien avec nos sujets :
+Les bonnes ressources anglophones gratuites sont très nombreuses, très
+faciles à trouver sur le Web. Le grand classique est R for data science,
+de Grolemund et Wickham [-@grolemund2022]. On se focalise ici avec deux
+autres qui sont le plus en lien avec nos sujets :
 
--   [Geocomputation with R, a book on geographic data analysis,visualization and modeling](https://geocompr.robinlovelace.net/)
-    [@lovelace2022].
--   [Mapme.biodiversity: Efficient Monitoring of Global Biodiversity Portfolios](https://mapme-initiative.github.io/mapme.biodiversity/index.html)
+-   [Geocomputation with R, a book on geographic data
+    analysis,visualization and
+    modeling](https://geocompr.robinlovelace.net/) [@lovelace2022].
+-   [Mapme.biodiversity: Efficient Monitoring of Global Biodiversity
+    Portfolios](https://mapme-initiative.github.io/mapme.biodiversity/index.html)
     [@görgen2022]
 
-N'hésitez pas à chercher directement sur le Web en cas de problème. Vous serez souvent conduits vers les forums stackoverflow ou RStudio, qui sont aussi des ressources très précieuses pour résoudre des problèmes très spécifiques.
+N'hésitez pas à chercher directement sur le Web en cas de problème. Vous
+serez souvent conduits vers les forums stackoverflow ou RStudio, qui
+sont aussi des ressources très précieuses pour résoudre des problèmes
+très spécifiques.
 
-Pour vous retrouver parmi la multitude de packages existants, il existe une autre ressource précieuse en ligne qui pourra vous orienter méthodologiquement en fonction de votre domaine de recherche. Il s'agit de CRAN Task View : https://cran.r-project.org/web/views/. 
+Pour vous retrouver parmi la multitude de packages existants, il existe
+une autre ressource précieuse en ligne qui pourra vous orienter
+méthodologiquement en fonction de votre domaine de recherche. Il s'agit
+de CRAN Task View : https://cran.r-project.org/web/views/.
 
-Les vues de tâches CRAN visent à fournir des recommandations sur les packages présents sur CRAN qui sont adaptés à un sujet spécifique. Elles donnent un bref aperçu des packages inclus, qui peuvent également être installés automatiquement à l'aide du package ctv. Les vues ont pour but d'avoir un focus bien défini de manière à ce qu'il soit suffisamment clair quels packages devraient être inclus (ou exclus) - et elles ne visent pas à recommander les "meilleurs" packages pour une tâche donnée.
+Les vues de tâches CRAN visent à fournir des recommandations sur les
+packages présents sur CRAN qui sont adaptés à un sujet spécifique. Elles
+donnent un bref aperçu des packages inclus, qui peuvent également être
+installés automatiquement à l'aide du package ctv. Les vues ont pour but
+d'avoir un focus bien défini de manière à ce qu'il soit suffisamment
+clair quels packages devraient être inclus (ou exclus) - et elles ne
+visent pas à recommander les "meilleurs" packages pour une tâche donnée.
 
-Faire un point sur le cheat sheet (?URL) et ouverture du cheat-sheet base de R : https://iqss.github.io/dss-workshops/R/Rintro/base-r-cheat-sheet.pdf  
+Faire un point sur le cheat sheet (?URL) et ouverture du cheat-sheet
+base de R :
+https://iqss.github.io/dss-workshops/R/Rintro/base-r-cheat-sheet.pdf
 
-# Interface Rstudio 
+# Interface Rstudio
 
-Point interface (console R, fenêtre script, environnement, fenêtre de fichiers)
+\[Interface de Rstudio\] (R_interface_colored.png)
+
+A : fenêtre script/source B : console C : environnement D : explorateur
+
+La fenêtre de script permet d'éditer les fichiers scripts en vue
+d'éxécuter le code.
+
+La console est la fênetre où s'éxécute le code et où on peut directement
+taper des commandes. Il n'est pas obligatoire de passer par la fenêtre
+de script.
+
+L'environnement rassemble des fonctionnalités pour suivre le
+fonctionnement de R, en faisant notamment apparaître les différents
+objets générés par notre script.
+
+L'explorateur permet de connaître les fichiers de notre ordinateur, de
+visualiser les rendus graphiques et cartographiqus, les différentes
+librairies et l'aide pour l'utilisation de ces dernières.
 
 # 2. Les règles de codage
 
-On se focalise ici sur quelques aspects qui peuvent être requis pour la manipulation du code et à la marge. 
+On se focalise ici sur quelques aspects qui peuvent être requis pour la
+manipulation du code et à la marge.
 
-# Point lisibilité du code 
+# La lisibilité du code
+
+Lorsqu'on saisit une commande, que ce soit dans la console ou dans la
+fenêtre de script, les espaces autour des opérateurs n'ont pas
+d'importance.
+
+Les trois commandes suivantes sont donc équivalentes, mais on privilégie
+en général la deuxième pour des raisons de lisibilité du code.
 
 ```{r}
-10+2
-10 + 2
+# Ce qui suit un dièze n'est pas exécuté. On appelle ça un commentaire.
+
+# Les trois commandes seront comprises par le code
+10+2 
+10 + 2 
 10       +       2
 ```
 
-(ajouter exo pour corriger le code)
+Pour les opérations plus complexes, il faut veiller à utiliser les
+parenthèses, sinon les résultats ne seront pas corrects :
 
-# La création d'objets via l'assignation 
+```{r}
+10 + 2 * 5 / 14 - 2 * 2 
 
-Le signe `<-` correspond à l'assignation d'une valeur à une variable. 
+(10 + (2*5)) / (14 - (2 * 2))  
+```
+
+# L'assignation (création d'objets)
+
+Le signe `<-` correspond à l'assignation d'une valeur à une variable
+dont on choisit le nom.
 
 ```{r ex calcs}
 #| code-fold: false
-
-# Ce qui suit un dièze n'est pas exécuté. On appelle ça un commentaire.
 
 # On commence par faire une opération simple
 3 + 4
@@ -87,20 +159,17 @@ c <- a + b
 c
 ```
 
-Du fait de l'assignation "\<-", les valeurs chiffrées sont
-automatiquement associées à l'objet. Ce dernier apparaît dans la fenêtre environnement. De manière générale, vous allez retrouver dans cette fenêtre tous les objets que vous avez créés : que ce soit de simples variables, des tableaux, des fonctions, des objets graphiques, etc.
+Du fait de l'assignation "\<-", **les valeurs sont automatiquement
+associées à l'objet** et ce dernier apparaît dans la fenêtre
+environnement.
 
-(ajouter exo)
+De manière générale, vous allez retrouver dans cette fenêtre tous les
+objets que vous avez créés après éxécution du code : que ce soit de
+simples variables, des tableaux, des fonctions, des objets graphiques,
+etc.
 
-NB : Les noms d’objets peuvent contenir des lettres, des chiffres, les symboles . et _. Ils ne peuvent pas commencer par un chiffre. Attention, **R fait la différence entre minuscules et majuscules** dans les noms d’objets, ce qui signifie que x et X seront deux objets différents, tout comme resultat et Resultat.
-
-De manière générale, il est préférable d’éviter les majuscules (pour les risques d’erreur) et les caractères accentués (pour des questions d’encodage) dans les noms d’objets.
-
-De même, il faut essayer de trouver un équilibre entre clarté du nom (comprendre à quoi sert l’objet, ce qu’il contient) et sa longueur. Par exemple, on préfèrera comme nom d’objet taille_conj1 à taille_du_conjoint_numero_1 (trop long) ou à t1 (pas assez)
-
-(Exemples ?) 
-
-Quand on assigne une nouvelle valeur à un objet déjà existant, la valeur précédente est perdue. **Les objets n’ont pas de mémoire**.
+Quand on assigne une nouvelle valeur à un objet déjà existant, la valeur
+précédente est perdue. **Les objets n'ont pas de mémoire**.
 
 ```{r}
 x <- 2
@@ -109,23 +178,14 @@ x
 #> [1] 5
 ```
 
-De la même manière, assigner un objet à un autre ne crée pas de “lien” entre les deux. Cela copie juste la valeur de l’objet de droite dans celui de gauche :
+# Les différents types d'objets
 
-```{r}
-x <- 1
-y <- 3
-x <- y
-x
-#> [1] 3
-## Si on modifie y, cela ne modifie pas x
-y <- 4
-x
-#> [1] 3
-```
+Les objets peuvent contenir tout un tas de données. Jusqu'ici on n'a
+stocké que des nombres, mais ils peuvent aussi contenir des chaînes de
+caractères (du texte), qu'on délimite avec des guillemets simples ou
+doubles (' ou ") :
 
-# Les différents objets 
-
-Les objets peuvent contenir tout un tas d’informations. Jusqu’ici on n’a stocké que des nombres, mais ils peuvent aussi contenir des chaînes de caractères (du texte), qu’on délimite avec des guillemets simples ou doubles (' ou ") :
+-   La chaîne de caractères
 
 ```{r}
 chien <- "Chihuahua"
@@ -133,13 +193,138 @@ chien
 #> [1] "Chihuahua"
 ```
 
-- Les vecteurs 
+Ici la variable "chien" est un objet contenant une chaîne de caractères.
 
-...
+Un point important est relatif aux types des variables : numérique,
+catégorielles, textes, dates, spatiales... En général, les opérations ne
+peuvent concerner que des variables du même type. Les fonctions sont
+souvent contraignantes quant aux types des variables qu'elles prennent
+comme arguments.
 
-# Les fonctions 
+```{r ex. variables}
+# Exemple avec une variable numérique et une variable caractère
+x <- 5
+y <- "hello"
 
-R est constitué de fonctions. De nombreuses fonctions prédéfinies sont contenues dans la base de R ou dans des packages qu'on ajoute (que l'on verra plus tard). La meilleure manière de comprendre ce qu'est une fonction est d'en créer une soi même.
+# Tentative d'addition de deux variables de types différents
+#resultat <- x + y
+
+```
+
+-   Les vecteurs
+
+Les vecteurs permettent de stocker des informations de même nature dans
+un unique objet. Exemple :
+
+```{r}
+# Si on continuait à créer des objets ponctuels :
+taille1 <- 156
+taille2 <- 164
+taille3 <- 197
+taille4 <- 147
+taille5 <- 173
+(taille1 + taille2 + taille3 + taille4 + taille5) / 5
+#> [1] 167.4
+
+```
+
+Précédemment, nous avons stockés différentes valeurs chiffrées sous
+plusieurs objets qui apparaissent dans notre fenêtre d'environnement.
+
+```{r}
+tailles <- c(156, 164, 197, 147, 173)
+#> [1] 156 164 197 147 173
+```
+
+Un vecteur dans R est un objet qui peut contenir plusieurs
+**informations du même type**, potentiellement en très grand nombre.
+
+Ici la variable "tailles"est un vecteur contenant des valeurs chiffrées.
+
+Ce qui est pratique avec les vecteurs, c'est qu'on peut alors leur
+appliquer des opérations qui s'appliqueront à l'ensemble des valeurs du
+vecteur.
+
+Exercice : taille en mètres
+
+```{r}
+# Si l'on souhaite la taille en mètres : 
+
+tailles / 100 
+#> [1] 1.56 1.64 1.97 1.47 1.73
+
+tailles_m <- tailles / 100
+tailles_m
+#> [1] 1.56 1.64 1.97 1.47 1.73
+```
+
+Cela fonctionne pour toutes les opérations de base :
+
+```{r}
+tailles + 10
+#> [1] 166 174 207 157 183
+tailles^2
+#> [1] 24336 26896 38809 21609 29929
+```
+
+Exercice : calculer l'IMC (diviser le poids en kilo par la taille en
+mètre) à partir des valeurs suivantes
+
+```{r}
+#Indice de l'IMC : 
+
+tailles <- c(156, 164, 197, 147, 173)
+poids <- c(45, 59, 110, 44, 88)
+
+```
+
+On crée l'objet imc :
+
+```{r}
+imc <- poids / (tailles / 100) ^ 2
+imc
+#> [1] 18.49112 21.93635 28.34394 20.36189 29.40292
+```
+
+-   Les data.frame
+
+```{r}
+#| code-fold: false
+# On commence par créer les variables (les colonnes du tableau)
+noms <- c("John", "Jack", "Cindy", "Samantha")
+sexe <- c("homme", "homme", "femme", "femme")
+ages <- c(42, 57, 24, NA)
+poids <- c(87, 73, NA, NA)
+tailles <- c(174, 198, 192, 164)
+
+# On les rassemble dans un tableau 
+ma_table <- data.frame(noms, sexe, ages, poids, tailles)
+
+```
+
+# Les noms d'objets
+
+Les noms d'objets peuvent contenir des lettres, des chiffres, les
+symboles . et \_. Ils ne peuvent pas commencer par un chiffre.
+Attention, **R fait la différence entre minuscules et majuscules** dans
+les noms d'objets, ce qui signifie que x et X seront deux objets
+différents, tout comme resultat et Resultat.
+
+De manière générale, il est préférable d'éviter les majuscules (pour les
+risques d'erreur) et les caractères accentués (pour des questions
+d'encodage) dans les noms d'objets.
+
+De même, il faut essayer de trouver un équilibre entre clarté du nom
+(comprendre à quoi sert l'objet, ce qu'il contient) et sa longueur. Par
+exemple, on préfèrera comme nom d'objet taille_conj1 à
+taille_du_conjoint_numero_1 (trop long) ou à t1 (pas assez)
+
+# Les fonctions
+
+R est constitué de fonctions. De nombreuses fonctions prédéfinies sont
+contenues dans la base de R ou dans des packages qu'on ajoute (que l'on
+verra plus tard). La meilleure manière de comprendre ce qu'est une
+fonction est d'en créer une soi même.
 
 ```{r ex fonction}
 #| code-fold: false
@@ -158,37 +343,54 @@ ajoute(a, b)
 
 c <- ajoute(a, b)
 c
+
 ajoute(c, a)
+
 ```
 
-Exercice : calculer l'IMC à partir des valeurs suivantes
+
+Exercice : rendre lisible le code ci-dessous
 
 ```{r}
-Indice de l'IMC : 
-
-tailles <- c(156, 164, 197, 147, 173)
-poids <- c(45, 59, 110, 44, 88)
+x <- 5*(3+2)-1
+if(x%%2==0) {print('Pair')} else{print('Impair')}
+for(i in 1:10) {if(i%%2 == 0) {print(paste('Nombre pair :', i))} else{print(paste('Nombre impair :', i))}}
 
 ```
 
+Code corrigé :
 
+```{r}
+# Calcul de x
+x <- 5 * (3 + 2) - 1
 
--   na.rm : Les valeurs manquantes, notées NA dans R (certaines peuvent
-    avoir pour valeur NaN). On utilise na.rm pour les éluder dans les
-    opérations simples.
+# Vérification de la parité de x
+if (x %% 2 == 0) {
+  print('x est pair')
+} else {
+  print('x est impair')
+}
+
+# Boucle pour les nombres de 1 à 10
+for (i in 1:10) {
+  if (i %% 2 == 0) {
+    print(paste('Nombre pair :', i))
+  } else {
+    print(paste('Nombre impair :', i))
+  }
+}
+
+```
+
+# Les valeurs manquantes
+
+na.rm : Les valeurs manquantes, notées NA dans R (certaines peuvent
+avoir pour valeur NaN). On utilise na.rm pour les éluder dans les
+opérations simples.
 
 ```{r ex. NA}
-#| code-fold: false
-# On commence par créer les variables (les colonnes du tableau)
-noms <- c("John", "Jack", "Cindy", "Samantha")
-sexe <- c("homme", "homme", "femme", "femme")
-ages <- c(42, 57, 24, NA)
-poids <- c(87, 73, NA, NA)
-tailles <- c(174, 198, 192, 164)
 
-# On les rassemble dans un tableau 
-ma_table <- data.frame(noms, sexe, ages, poids, tailles)
-
+# On peut reprend le jeu de données ma_table 
 # On peut faire une moyenne sur les tailles car on a toutes les variables
 mean(ma_table$tailles)
 sum(ma_table$tailles)
@@ -203,9 +405,18 @@ sum(ma_table$poids, na.rm = TRUE)
 
 ```
 
--   L'opérateur pipeline 
+# Le tidyverse
 
-Le signe `%>%` est un "tuyau". On peut le lire à haute voix comme "ensuite". Par exemple :
+Le "tidyverse" st un ensemble cohérent de packages R conçus pour la
+manipulation, la visualisation et l'analyse de données de manière
+cohérente et efficace. Il a été développé pour simplifier le flux de
+travail de l'analyse de données et pour rendre le code plus lisible et
+plus facile à comprendre.
+
+# L'opérateur pipeline
+
+Le signe `%>%` est un "tuyau". On peut le lire à haute voix comme
+"ensuite". Par exemple :
 
 ```{r ex. pipe}
 #| code-fold: false
@@ -217,22 +428,23 @@ d <- a %>%
 
 ```
 
-(faire exo basé sur dernier exemple)
+# La préparation des données avec dplyr
 
-# 3. Le "tidyverse" st un ensemble cohérent de packages R conçus pour la
-    manipulation, la visualisation et l'analyse de données de manière
-    cohérente et efficace. Il a été développé pour simplifier le flux de
-    travail de l'analyse de données et pour rendre le code plus lisible
-    et plus facile à comprendre.
+Le "tidyverse" comprend plusieurs packages populaires, et
+notamment,**dplyr**. Ce dernier est très utile pour épurer les données
+lorsque vous travaillez sur des tableaux (et donc sur des tables
+attributaires).
 
-Le "tidyverse" comprend plusieurs packages populaires, et notamment,**dplyr**. Ce dernier est très utile pour épurer les données lorsque vous travaillez sur des tableaux (et donc sur des tables attributaires).Il est utilisé pour la manipulation de données, notamment le filtrage, la sélection, le regroupement et la création de nouvelles variables.
-
+Il est utilisé pour la manipulation de données, notamment le filtrage,
+la sélection, le regroupement et la création de nouvelles variables.
 
 ```{r ex.tidyverse}
 #| code-fold: false
 # Un exemple qui combine ces opérations
 ma_table %>%
   filter(!is.na(ages)) 
+#consulter la sortie de l'objet
+
 
 ma_table %>%
   filter(!is.na(ages)) %>%
@@ -255,18 +467,123 @@ ma_table %>%
   
 ```
 
-Voici certaines de ses fonctions fondamentales :
+Pour comprendre l'intérêt du tidyverse, voici le même tableau sans
+l'opérateur pipe :
 
-    - select : choisir des colonnes 
-    - filter : choisir des lignes
-    - mutate : modifier des valeurs
-    - group_by : variables pour des tris 
-    - créer des filtres : summarise
+```{r}
+filtered_table <- filter(ma_table, !is.na(ages))
+selected_cols <- select(filtered_table, sexe, ages, tailles, poids)
+grouped_table <- group_by(selected_cols, sexe)
+summary_table <- summarise(grouped_table,
+  nb_pers = n(),
+  somme_poids = sum(poids, na.rm = TRUE),
+  taille_max = max(tailles, na.rm = TRUE),
+  age_moy = mean(ages, na.rm = TRUE)
+)
 
-Certaines opérations particulières requièrent des connaissances plus approfondies.
+```
 
--   Jointures : fusionner deux tableaux par une variable
-    d'identification ("clé")
+On est contraints à créer beaucoup plus de variables comme
+intermédiaires de calcul (selected_cols, grouped_table, summary_table)
+
+Voici certaines de fonctions fondamentales du dplyr : - select : choisir
+des colonnes - filter : choisir des lignes - mutate : modifier des
+valeurs - group_by : variables pour des tris - créer des filtres :
+summarise
+
+Exercice : après avoir visualisé le tableau suivant, re-coder les
+opérations ci-dessous en utilisant le tidyverse :
+
+1.  Sélectionnez uniquement les colonnes produit, quantite, et
+    prix_unitaire du data frame ventes_magasin.
+
+2.  Filtrez les lignes du data frame pour ne conserver que les ventes où
+    la quantité vendue est supérieure à 5 unités.
+
+3.  Ajoutez une nouvelle colonne nommée montant qui représente le
+    montant total de chaque vente (quantité multipliée par le prix
+    unitaire) et ajoutez-la au data frame.
+
+4.  Regroupez les données par produit pour calculer la quantité totale
+    vendue de chaque produit.
+
+5.  Filtrez les produits pour ne conserver que ceux dont la quantité
+    totale vendue est supérieure à 100 unités.
+
+```{r}
+# Création du data frame ventes_magasin
+
+ventes_magasin <- data.frame(
+  produit = c("Produit A", "Produit B", "Produit A", "Produit C", "Produit B", "Produit A", "Produit C", "Produit B", "Produit A"),
+  quantite = c(8, 4, 12, 6, 7, 9, 3, 11, 5),
+  prix_unitaire = c(10, 15, 8, 12, 20, 10, 18, 14, 9),
+  date_vente = as.Date(c("2023-01-05", "2023-01-08", "2023-01-09", "2023-01-10", "2023-01-15", "2023-01-20", "2023-01-25", "2023-01-30", "2023-02-02"))
+  )
+
+
+# # Étape 1 : Sélectionnez uniquement les colonnes produit, quantite et prix_unitaire
+# ventes_magasin <- ventes_magasin[c("produit", "quantite", "prix_unitaire")]
+# 
+# # Étape 2 : Filtrez les ventes où la quantité vendue est supérieure à 5 unités
+# ventes_magasin <- ventes_magasin[ventes_magasin$quantite > 5, ]
+# 
+# # Étape 3 : Ajoutez une colonne montant
+# ventes_magasin$montant <- ventes_magasin$quantite * ventes_magasin$prix_unitaire
+# 
+# # Étape 4 : Regroupez par produit et calculez la quantité totale vendue
+# ventes_par_produit <- aggregate(quantite ~ produit, data = ventes_magasin, FUN = sum)
+# 
+# # Étape 5 : Filtrez les produits avec une quantité totale vendue supérieure à 100 unités
+# ventes_par_produit <- ventes_par_produit[ventes_par_produit$quantite_totale > 100, ]
+# 
+# # Étape 6 : Résumez les données
+# ventes_par_produit <- aggregate(cbind(quantite, montant) ~ produit, data = ventes_magasin, FUN = function(x) c(sum = sum(x), nombre_ventes = length(x)))
+```
+
+Réponse :
+
+```{r}
+library(dplyr)
+
+# Étape 1 : Sélectionnez uniquement les colonnes produit, quantite, et prix_unitaire
+ventes_magasin <- ventes_magasin %>%
+  select(produit, quantite, prix_unitaire)
+
+# Étape 2 : Filtrez les ventes où la quantité vendue est supérieure à 5 unités
+ventes_magasin <- ventes_magasin %>%
+  filter(quantite > 5)
+
+# Étape 3 : Ajoutez une colonne montant
+ventes_magasin <- ventes_magasin %>%
+  mutate(montant = quantite * prix_unitaire)
+
+# Étape 4 : Regroupez par produit et calculez la quantité totale vendue
+ventes_par_produit <- ventes_magasin %>%
+  group_by(produit) %>%
+  summarise(quantite_totale = sum(quantite))
+
+# Étape 5 : Filtrez les produits avec une quantité totale vendue supérieure à 100 unités
+ventes_par_produit <- ventes_par_produit %>%
+  filter(quantite_totale > 100)
+
+# Étape 6 : Résumez les données
+ventes_par_produit <- ventes_magasin %>%
+  group_by(produit) %>%
+  summarise(
+    quantite_totale = sum(quantite),
+    montant_total = sum(montant),
+    nombre_ventes = n()
+  )
+
+```
+
+Certaines opérations particulières requièrent des connaissances plus
+approfondies.
+
+# Les jointures
+
+Jointures : fusionner deux tableaux par une variable d'identification
+("clé")
 
 ```{r ex. jointure}
 # Tableau clients
@@ -282,72 +599,19 @@ resultat <- inner_join(clients, commandes, by = "ID")
 
 ```
 
-# Librairies R
+Cette opération exige toutefois que la **variable d'identification soit
+écrite de manière identique** dans les deux jeux de données.
 
-Plusieurs packages R sont utilisées pour ce projet. Les packages dans R sont des extensions de logiciels qui ajoutent des fonctionnalités spécifiques au langage R de base. 
+Supposons que l'on travaille sur les aires protégées à Madagascar et que
+l'on dispose de deux jeux de données provenant de sources différentes.
+On a alors des informations complémentaires que l'on souhaite fusionner
+en un seul tableau via le nom de l'aire protégée.
 
-Ils sont conçus pour faciliter l'analyse de données, la visualisation, la modélisation statistique, et bien plus encore. Les packages sont comme des boîtes à outils virtuelles
-qui permettent aux utilisateurs d'effectuer des tâches analytiques
-avancées sans avoir à réinventer la roue à chaque fois. Ils permettent de gagner du temps et de se concentrer sur la résolution de problèmes spécifiques à son domaine d'étude, au lieu de vous soucier de la programmation de fonctions de base.
+Il faudra veiller à ce que les noms aient la même écriture (pas de
+différences avec des majuscules, des abréviations ou des noms
+raccourcis)
 
-Lors de la rédaction de publications scientifiques, il est important de citer correctement les packages R utilisés dans votre analyse. Assurez-vous d'inclure le nom complet du package ainsi que le nom de son auteur ou des auteurs. Zotero et RStudio permettent aisément d'inclure ces citations dans votre analyse.
-
-Les autres packages mobilisés dans pour ce cours sont listés dans le bloc de code ci-dessous :
-
-```{r librairies}
-library("tidyverse") # Une série de packages pour faciliter la manipulation de données
-library("readxl") # Pour lire les fichiers excel (Carvalho et al. 2018)
-library("writexl") # Pour écrire des fichiers excel
-library("cowplot") # Pour arranger des graphiques en illustrations composées
-library("gt") # Pour des rendus graphiques harmonisés html et pdf/LaTeX
-library("sf") # Pour faciliter la manipulation de données géographiques
-library("wdpar") # Pour télécharger simplement la base d'aires protégées WDPA
-library("webdriver") # requis pour installer phantomjs pour wdpar
-library("tmap") # Pour produire de jolies carte
-library("geodata") # Pour télécharger simplement les frontières administratives
-library("tidygeocoder") # pour obtenir les coordo GPS d'un point à partir de son nom
-library("maptiles") # Pour télécharger des fonds de carte 
-library("mapme.biodiversity") # Acquisition et traitement des données du projet
-library("plm") # Linear Models for Panel Data and robust covariance matrices
-library("broom") # pour reformater simplement les rendus de tests statistiques
-library("stargazer") # Reformater de manière plus lisible les résumé des régressions
-library("MatchIt") # Pour le matching
-#library("glm") # Modèles linéaires généralisés (pour le PSM)
-library("optmatch") # Fonctions d'optimisation du matching
-library("did") # Méthode de double différence échelonnée de Callaway et Sant'Anna
-library("mapme.biodiversity")
-library("cobalt") # Tables et graphs d'équilibre des groupes de matching
-
-```
-
-## Import des données
-
-(WDPA/Vahatra fiabilité des données 
-- repérer les valeurs manquantes
-- signification nom des colonnes via biblio...)
-
----------------
-
-En très bref :
-
--   Pour les fichiers excel ou csv, dans le volet "files" du panneau en
-    bas à droite de l'interface Rstudio, cliquer sur le fichier en
-    question et utiliser l'assistant d'import.
--   Pour les autres fichiers, se référer à l'aide ou chercher sur
-    internet.
-
-Voir [cette page](https://juba.github.io) pour un topo sur les imports.
-\[#TODO:Préciser l'url\]
-
-
-
-Cette opération exige toutefois que la **variable d'identification soit écrite de manière identique** dans les deux jeux de données.
-
-Supposons que l'on travaille sur les aires protégées à Madagascar et que l'on dispose de deux jeux de données provenant de sources différentes. On a alors des informations complémentaires que l'on souhaite fusionner en un seul tableau via le nom de l'aire protégée. 
-
-Il faudra veiller à ce que les noms aient la même écriture (pas de différences avec des majuscules, des abréviations ou des noms raccourcis)
-
--   Pivots : passer un tableau de long en large
+# Les pivots : passer un tableau de long en large
 
 Les données tabulaires peuvent être structurées de deux manières
 différentes, généralement appelées format long et format large.
@@ -393,27 +657,40 @@ observation, c'est-à-dire l'observation d'un pays spécifique pour une
 année spécifique.
 
 ```{r ex. formats long/large}
-# Création de vecteurs pour les années et les pays
+
+# Création d'un tableau long 
+
+# Création de vecteurs pour les années, les pays et les valeurs
 annees <- c(2000, 2001)
 pays <- c("Argentina", "Brasil", "Chile")
+valeurs_ex <- c(1723, 1823, 1353, 1592, 506, 602)
+
+df_long <- data.frame(Annee = annees, Pays = pays, Valeur = valeurs_ex)
+
+# Transformation en format large avec pivot_wider
+df_wide <- pivot_wider(df_long, names_from = Pays, values_from = Valeur)
+
+# Création d'un tableau large 
 
 # Création de la matrice (alias liste de vecteurs) pour les valeurs X
+
 valeurs_ex <- matrix(c(
   1723, 1823, 
   1353, 1592,
   506, 602
 ), nrow = 3, byrow = TRUE)  # Assurez-vous que les valeurs sont dans le bon ordre
 
-# Créez un data frame en format "large"
 df_large <- data.frame(Annee = annees, Argentina = valeurs_ex[1, ], Brasil = valeurs_ex[2, ], Chile = valeurs_ex[3, ])
 
 # Convertir en format "long" 
 df_long <- df_large %>%
   pivot_longer(cols = -Annee, names_to = "Pays", values_to = "Valeur")
 
+df_long
+
 ```
 
--   Map : appliquer des opérations successives
+# Map : appliquer des opérations successives
 
 La fonction map est une fonction puissante du package purrr du tidyverse
 en R. Elle permet d'appliquer une fonction à chaque élément d'une liste
@@ -422,7 +699,7 @@ les résultats de ces applications. C'est utile lorsque vous souhaitez
 effectuer des opérations répétitives sur des éléments de données, comme
 appliquer une fonction à chaque élément d'une liste ou d'un vecteur.
 
-```{r ex. map}
+```{r ex.map}
 
 # Utilisation de map pour multiplier les valeurs par 2
 df_long_2 <- df_long %>%
@@ -433,66 +710,69 @@ df_long_2 <- df_long %>%
 
 -   Unnest : déplier des listes imbriquées (développer)
 
-Un point important est relatif aux types des variables : numérique,
-catégorielles, textes, dates, spatiales... En général, les opérations ne
-peuvent concerner que des variables du même type. Les fonctions sont
-souvent contraignantes quant aux types des variables qu'elles prennent
-comme arguments.
+# Librairies R
 
-```{r ex. variables}
-# Exemple avec une variable numérique et une variable caractère
-x <- 5
-y <- "hello"
+Plusieurs packages R sont utilisées pour ce projet. Les packages dans R
+sont des extensions de logiciels qui ajoutent des fonctionnalités
+spécifiques au langage R de base.
 
-# Tentative d'addition de deux variables de types différents
-#resultat <- x + y
+Ils sont conçus pour faciliter l'analyse de données, la visualisation,
+la modélisation statistique, et bien plus encore. Les packages sont
+comme des boîtes à outils virtuelles qui permettent aux utilisateurs
+d'effectuer des tâches analytiques avancées sans avoir à réinventer la
+roue à chaque fois. Ils permettent de gagner du temps et de se
+concentrer sur la résolution de problèmes spécifiques à son domaine
+d'étude, au lieu de vous soucier de la programmation de fonctions de
+base.
 
-```
+Lors de la rédaction de publications scientifiques, il est important de
+citer correctement les packages R utilisés dans votre analyse.
+Assurez-vous d'inclure le nom complet du package ainsi que le nom de son
+auteur ou des auteurs. Zotero et RStudio permettent aisément d'inclure
+ces citations dans votre analyse.
 
-Pour une analyse plus approfondie, voir juba.
+Les autres packages mobilisés dans pour ce cours sont listés dans le
+bloc de code ci-dessous :
 
-## Produire des cartes simples avec R
-
-(voir car pour l'instant pas de shp Vahatra)
-
-```{r ex. carte}
-#| code-fold: false
-# Les librairies requises 
-library(sf) # pour traiter des données spatiales
-library(tmap) # pour faire des cartes
+```{r librairies}
+library("tidyverse") # Une série de packages pour faciliter la manipulation de données
+library("readxl") # Pour lire les fichiers excel (Carvalho et al. 2018)
+library("writexl") # Pour écrire des fichiers excel
+library("cowplot") # Pour arranger des graphiques en illustrations composées
+library("gt") # Pour des rendus graphiques harmonisés html et pdf/LaTeX
+library("sf") # Pour faciliter la manipulation de données géographiques
 library("wdpar") # Pour télécharger simplement la base d'aires protégées WDPA
-
-# On regarde si les données WDPA sont disponibles sur l'ordinateur qui exécute
-if (file.exists("data/WDPA/WDPA_Oct2023_MDG-shapefile.zip")) {
-  # Si oui, on charge
-  WDPA_Mada <- wdpa_read("data/WDPA/WDPA_Oct2023_MDG-shapefile.zip")
-} else {
-  # Si non, on télécharge depuis protectedplanet
-  WDPA_Mada <- wdpa_fetch("Madagascar", wait = TRUE,
-                      download_dir = "data/WDPA") 
-}
-  
-  # On projette la carte
-tm_shape(WDPA_Mada) +
-  tm_polygons(col = "IUCN_CAT") +
-  tmap_options(check.and.fix = TRUE) + # Parce qu'on a quelques erreurs topo
-  tm_layout(legend.outside = TRUE)
-
-```
-
-(projection de la carte, obligatoire de faire st_make_valid ?)
-
-## Produire des graphiques avec R
-
-On utilise le package ggplot, avec la syntaxe suivante.
-
-```{r ex. graphique}
-# On réalise un graphique simple
-WDPA_Mada %>%
-  ggplot(aes(x = IUCN_CAT, y = REP_AREA)) +
-  geom_col()
+library("webdriver") # requis pour installer phantomjs pour wdpar
+library("tmap") # Pour produire de jolies carte
+library("geodata") # Pour télécharger simplement les frontières administratives
+library("tidygeocoder") # pour obtenir les coordo GPS d'un point à partir de son nom
+library("maptiles") # Pour télécharger des fonds de carte 
+library("mapme.biodiversity") # Acquisition et traitement des données du projet
+library("plm") # Linear Models for Panel Data and robust covariance matrices
+library("broom") # pour reformater simplement les rendus de tests statistiques
+library("stargazer") # Reformater de manière plus lisible les résumé des régressions
+library("MatchIt") # Pour le matching
+#library("glm") # Modèles linéaires généralisés (pour le PSM)
+library("optmatch") # Fonctions d'optimisation du matching
+library("did") # Méthode de double différence échelonnée de Callaway et Sant'Anna
+library("mapme.biodiversity")
+library("cobalt") # Tables et graphs d'équilibre des groupes de matching
 
 ```
+
+## Import des données
+
+En très bref :
+
+-   Pour les fichiers excel ou csv, dans le volet "files" du panneau en
+    bas à droite de l'interface Rstudio, cliquer sur le fichier en
+    question et utiliser l'assistant d'import.
+-   Pour les autres fichiers, se référer à l'aide ou chercher sur
+    internet. Le cheat sheet"base R" présente les principales
+    importations.
+
+Voir [cette page](https://juba.github.io) pour un topo sur les imports.
+\[#TODO:Préciser l'url\]
 
 # Données attributaires des aires protégées
 
@@ -613,28 +893,6 @@ gt(AP_Vahatra_iucn) %>%
     "Source : données de l'association Vahatra"
   )
 
-
-```
-
-Si maintenant on s'intéresse à la dynamique de création d'aires
-protégées, on peut croiser les données correspondant à l'année de
-création avec celles de superficie.
-
-```{r dynamique de création AP}
-# Calcul de la superficie cumulée en fonction des années
-AP_superficie_annees <- AP_Vahatra %>%
-  group_by(an_creation) %>% # On regroupe d'abord les AP qui ont été créées la même année
-  summarise(superficie_cumulée = sum(superficie_km2)) %>% # On fait la somme de ces superficies (par année de création)
-  mutate(superficie_cumulée = cumsum(superficie_cumulée)) # Pour le rendu graphique (cumulatif), on accumule les superficies de chaque groupe (année de création X) avec le groupe précédent (X -1)
-
-## Création d'un graphique de dispersion linéaire (points et ligne de raccordement) 
-ggplot(data = AP_superficie_annees, aes(x = an_creation, y = superficie_cumulée)) +
-  geom_point() +
-  geom_line() +
-  labs(x = "Année de création de l'aire protégée", y = "Superficie cumulée (km²)") +
-  ggtitle("Superficie cumulée en fonction de l'année de création") +
-  theme_minimal()
-
 ```
 
 ## World Database on Protected Areas
@@ -657,70 +915,101 @@ colnames(WDPA_Mada)
 ```
 
 > Exercice : trouver signification de ces noms de colonnes, que
-> représentent-elles réellement ?
+> représentent-elles réellement ? Ces données sont-elles fiables ?
 
 Une technique pour connaître la fiabilité des données est de recenser
 les valeurs manquantes. L'ensemble peut être synthétisé sous forme de
 tableau.
 
 ```{r valeurs NA}
-# Résumé des valeurs manquantes
-WDPA_Mada %>%
-  st_drop_geometry() %>% #obligatoire 
-  summarise(`Nombre total d'aires protégées` = n(),
-            `Catégorie IUCN manquante` = sum(IUCN_CAT == "Not Reported"),
-            `Année de création manquante` = sum(STATUS_YR == 0),
-            `Gestionnaire manquant` = sum(MANG_AUTH == "Not Reported")) %>%
-  pivot_longer(cols = everything(),
-               names_to = " ",
-               values_to = "Nombre d'aires") %>%
-  gt() %>%
-  tab_header("Valeurs manquantes dans les données WDPA pour Madagascar") %>%
-  tab_source_note("Source : WDPA (octobre 2023)")
+# # Résumé des valeurs manquantes
+# 
+# WDPA_Mada %>%
+#   summarise(`Nombre total d'aires protégées` = n(),
+#             `Catégorie IUCN manquante` = sum(IUCN_CAT == "Not Reported"),
+#             `Année de création manquante` = sum(STATUS_YR == 0),
+#             `Gestionnaire manquant` = sum(MANG_AUTH == "Not Reported")) %>%
+#   pivot_longer(cols = everything(),
+#                names_to = " ",
+#                values_to = "Nombre d'aires") %>%
+#   gt() %>%
+#   tab_header("Valeurs manquantes dans les données WDPA pour Madagascar") %>%
+#   tab_source_note("Source : WDPA (octobre 2023)")
 
 ```
 
 > Exercice : combien il y a-t-il d'aires protégées au total dans le jeu
-> de données Vahatra et dans celui du WDPA ?
+> de données Vahatra et dans celui du WDPA ? Combien de données manquantes ? 
 
 On peut également comparer ceux pour lesquels on a des différences de
 date ou de statut.
 
-```{r différences WDPA et Vahatra}
+#Discussion comment vous feriez pour comparer ces deux jeux de données Pause du midi, comparaison
 
-# On ne garde que les aires de WDPA qui apparaissent dans Vahatra
-WDPA_commun <- WDPA_Mada %>%
-  filter(NAME %in% AP_Vahatra$nom_wdpa) %>%
-  filter(!(NAME == "Analalava" & IUCN_CAT == "Not Reported")) %>%
-  filter(!(NAME == "Site Bioculturel d'Antrema" & IUCN_CAT == "Not Reported")) %>%
-  filter(DESIG != "UNESCO-MAB Biosphere Reserve") %>%
-  arrange(NAME)  %>%
-  mutate(rownum = row_number())
+# Rechargement des données 
+# Charger en manuel Vahatra
+# Charger en important les données WDPA (dbf)
+# Système de projection 
 
-# On garde seulement les métadonnées qu'on veut comparer
-WDPA_a_comparer <- WDPA_commun %>% # On repart des AP communes
-  st_drop_geometry() %>% # Plus besoin de spatial
-  select(nom_wdpa = NAME, type_wdpa = INT_CRIT, cat_iucn_wdpa = IUCN_CAT,
-         year_wdpa = STATUS_YR) # On ne garde que les colonnes à comparer
+## Produire des cartes simples avec R
 
-verif_meta_wdpa <-AP_Vahatra %>%
-  st_drop_geometry() %>% # Pas besoin d'un jeu spatial
-  select(nom:date_modification, nom_wdpa) %>% # colonnes à garder dans Vahatra
-  # On renomme la catégorie IUCN de Vahatra et on code les NA comme dans WDPA
-  mutate(cat_iucn = ifelse(is.na(cat_iucn), "Not Reported", cat_iucn)) %>%
-  left_join(WDPA_a_comparer, by = "nom_wdpa") %>% # On rassemble Vahatra et WDPA
-  # On compare les dates et statuts
-  mutate(`Différence de date` = year(date_creation) != year_wdpa,
-         `Différence de statut` = cat_iucn != cat_iucn_wdpa)
+```{r ex. carte}
+#| code-fold: false
+# Les librairies requises 
+library(sf) # pour traiter des données spatiales
+library(tmap) # pour faire des cartes
+library("wdpar") # Pour télécharger simplement la base d'aires protégées WDPA
 
-verif_meta_wdpa %>%
-  summarise(`Nombre d'aires protégées comparées` = n(),
-            `Différence de date` = sum(`Différence de date`),
-            `Différence de statut` = sum(`Différence de statut`)) %>%
-  gt() %>%
-  tab_header(title = paste("Différences entre les données de WDPA et celles de",
-                     "l'assciation Vahatra sur les aires protégées terrestres",
-                     "à Madagascar"))
+# On regarde si les données WDPA sont disponibles sur l'ordinateur qui exécute
+if (file.exists("data/WDPA/WDPA_Oct2023_MDG-shapefile.zip")) {
+  # Si oui, on charge
+  WDPA_Mada <- wdpa_read("data/WDPA/WDPA_Oct2023_MDG-shapefile.zip")
+} else {
+  # Si non, on télécharge depuis protectedplanet
+  WDPA_Mada <- wdpa_fetch("Madagascar", wait = TRUE,
+                      download_dir = "data/WDPA") 
+}
+  
+  # On projette la carte
+tm_shape(WDPA_Mada) +
+  tm_polygons(col = "IUCN_CAT") +
+  tmap_options(check.and.fix = TRUE) + # Parce qu'on a quelques erreurs topo
+  tm_layout(legend.outside = TRUE)
+
+```
+
+(projection de la carte, obligatoire de faire st_make_valid ?)
+
+## Produire des graphiques avec R
+
+On utilise le package ggplot, avec la syntaxe suivante.
+
+```{r ex. graphique}
+# On réalise un graphique simple
+WDPA_Mada %>%
+  ggplot(aes(x = IUCN_CAT, y = REP_AREA)) +
+  geom_col()
+
+```
+
+Si maintenant on s'intéresse à la dynamique de création d'aires
+protégées, on peut croiser les données correspondant à l'année de
+création avec celles de superficie.
+
+```{r dynamique de création AP}
+# Calcul de la superficie cumulée en fonction des années
+AP_superficie_annees <- AP_Vahatra %>%
+  group_by(an_creation) %>% # On regroupe d'abord les AP qui ont été créées la même année
+  summarise(superficie_cumulée = sum(superficie_km2)) %>% # On fait la somme de ces superficies (par année de création)
+  mutate(superficie_cumulée = cumsum(superficie_cumulée)) # Pour le rendu graphique (cumulatif), on accumule les superficies de chaque groupe (année de création X) avec le groupe précédent (X -1)
+
+## Création d'un graphique de dispersion linéaire (points et ligne de raccordement) 
+ggplot(data = AP_superficie_annees, aes(x = an_creation, y = superficie_cumulée)) +
+  geom_point() +
+  geom_line() +
+  labs(x = "Année de création de l'aire protégée", y = "Superficie cumulée (km²)") +
+  ggtitle("Superficie cumulée en fonction de l'année de création") +
+  theme_minimal()
 
 ```
 
@@ -801,53 +1090,6 @@ superpositions, on calcule tout d'abord la somme des surfaces des aires
 protégéés enregistrées dans la base WDPA, puis on la compare à leur
 emprise totale, sans doublon.
 
-```{r superposition AP WDPA}
-# On ne garde que les polygones (sans les points)
-WDPA_Mada_poly <- WDPA_Mada %>% 
-   filter(st_geometry_type(.) == "MULTIPOLYGON")
- 
-# On ne garde que les parties terrestres
-WDPA_Mada_poly_terrestre <- WDPA_Mada_poly %>%
-st_intersection(contour_mada)
- 
-# On calcule le total des surfaces de chaque aire
-surface_cumul <- WDPA_Mada_poly_terrestre %>%
-mutate(surface = st_area(.)) %>%
-st_drop_geometry() %>% 
-summarise(surface = sum(surface, na.rm = TRUE)) %>%
-mutate(`Type de cumul` = "Somme des surfaces terrestres de chaque aire protégée",
-.before = everything())
-
-library(units)
-
-surface_tot <- WDPA_Mada_poly_terrestre %>%
-st_union() %>%
-st_as_sf() %>% 
-st_make_valid()%>% 
-mutate(surface = st_area(.)) %>%
-st_drop_geometry() %>% 
-summarise(surface = sum(surface, na.rm = TRUE)) %>%
-mutate(`Type de cumul` = "Emprise totale des aires protégées",.before = everything())
-
-compare_surfaces <- surface_cumul %>%
-bind_rows(surface_tot) %>%
-mutate(surface = set_units(surface, "hectares"),surface = as.numeric(surface)) %>%
-rename(`Surface (ha)` = surface)
- 
-compare_surfaces %>%
-gt() %>%
-fmt_number(columns = `Surface (ha)`, use_seps = TRUE, decimals = 0) %>% 
-tab_header(title = "Superposition des aires WDPA", subtitle = "Somme des surfaces d'aires vs. emprise totale") %>%
-  tab_source_note("Source : WDPA (oct. 2023), calculs des auteurs")
-  
-```
-
-Cela signifie qu'on a de nombreuses aires protégées dans la base WDPA
-qui se superposent et que leur emprise réelle est bien inférieure à la
-somme de leurs surfaces. Réaliser des sommes ou des moyennes simples sur
-l'ensemble de la base WDPA revient à compter plusieurs fois les mêmes
-zones géographiques.
-
 ## Comparaison des données Vahatra et WDPA
 
 On commence par visualiser les différences spatiales entre les
@@ -857,59 +1099,59 @@ WDPA et Vahatra.
 ```{r différences spatiales WDPA et Vahatra}
 # Cette fonction calcule la part d'un polygone incluse dans un 
 # autre polygone et retourne un ratio entre 0 et 1
-ratio_inclus <- function(x, y) {
-  inclus <- st_intersection(x, y)
-  ratio <- st_area(inclus) / st_area(x)
-  return(ratio)
-}
-
-# On calcule la part des polygones Vahatra incluse dans les polgones WDPA 
-V_in_W <- map2_dbl(WDPA_commun$geometry, AP_Vahatra$geometry, ratio_inclus)
-# Puis l'inverse
-W_in_V <- map2_dbl(AP_Vahatra$geometry, WDPA_commun$geometry, ratio_inclus)
-# On fait un facteur des deux
-recoupement_mutuel <- V_in_W * W_in_V
-# Qu'on ramène dans les jeux de données d'origine
-WDPA_commun2 <- bind_cols(WDPA_commun, V_in_W = V_in_W, W_in_V = W_in_V,
-                         recoupement_mutuel = recoupement_mutuel) %>%
-  arrange(recoupement_mutuel, rownum)
-AP_Vahatra2 <- bind_cols(AP_Vahatra, V_in_W = V_in_W, W_in_V = W_in_V,
-                        recoupement_mutuel = recoupement_mutuel) %>%
-  arrange(recoupement_mutuel, rownum)
-
-# On prend maintenant les 5 les plus éloignés et on les visualise
-min_recoup <- WDPA_commun2 %>%
-  filter(row_number() <= 10) %>%
-  select(nom_wdpa = NAME, rownum) %>%
-  mutate(source = "WDPA") %>%
-  bind_rows(select(filter(AP_Vahatra2, rownum %in% .$rownum), nom_wdpa, rownum)) %>%
-  mutate(source = ifelse(is.na(source), "Vahatra", source))
-tmap_mode("plot")
-min_recoup %>%
-  tm_shape() +
-  tm_polygons() +
-  tm_facets(by = c("nom_wdpa", "source")) +
-  tm_layout(panel.label.size=3) 
-```
-
-Dans les cas qu'on peut comparer, les données de l'association Vahatra
-semblent plus fiables. On va donc privilégier l'utilisation de ces
-dernières.
-
-On va également visualiser les aires de WDPA qui ne sont pas contenues
-dans Vahatra.
-
-```{r}
-WDPA_exclu <- WDPA_Mada %>%
-  filter(!(NAME %in% AP_Vahatra$nom_wdpa))
-
-tmap_mode("view")
-WDPA_exclu %>%
-  tm_shape() +
-  tm_polygons(col = "IUCN_CAT")
+# ratio_inclus <- function(x, y) {
+#   inclus <- st_intersection(x, y)
+#   ratio <- st_area(inclus) / st_area(x)
+#   return(ratio)
+# }
+# 
+# # On calcule la part des polygones Vahatra incluse dans les polgones WDPA 
+# V_in_W <- map2_dbl(WDPA_commun$geometry, AP_Vahatra$geometry, ratio_inclus)
+# # Puis l'inverse
+# W_in_V <- map2_dbl(AP_Vahatra$geometry, WDPA_commun$geometry, ratio_inclus)
+# # On fait un facteur des deux
+# recoupement_mutuel <- V_in_W * W_in_V
+# # Qu'on ramène dans les jeux de données d'origine
+# WDPA_commun2 <- bind_cols(WDPA_commun, V_in_W = V_in_W, W_in_V = W_in_V,
+#                          recoupement_mutuel = recoupement_mutuel) %>%
+#   arrange(recoupement_mutuel, rownum)
+# AP_Vahatra2 <- bind_cols(AP_Vahatra, V_in_W = V_in_W, W_in_V = W_in_V,
+#                         recoupement_mutuel = recoupement_mutuel) %>%
+#   arrange(recoupement_mutuel, rownum)
+# 
+# # On prend maintenant les 5 les plus éloignés et on les visualise
+# min_recoup <- WDPA_commun2 %>%
+#   filter(row_number() <= 10) %>%
+#   select(nom_wdpa = NAME, rownum) %>%
+#   mutate(source = "WDPA") %>%
+#   bind_rows(select(filter(AP_Vahatra2, rownum %in% .$rownum), nom_wdpa, rownum)) %>%
+#   mutate(source = ifelse(is.na(source), "Vahatra", source))
+# tmap_mode("plot")
+# min_recoup %>%
+#   tm_shape() +
+#   tm_polygons() +
+#   tm_facets(by = c("nom_wdpa", "source")) +
+#   tm_layout(panel.label.size=3) 
+# ```
+# 
+# Dans les cas qu'on peut comparer, les données de l'association Vahatra
+# semblent plus fiables. On va donc privilégier l'utilisation de ces
+# dernières.
+# 
+# On va également visualiser les aires de WDPA qui ne sont pas contenues
+# dans Vahatra.
+# 
+# ```{r}
+# WDPA_exclu <- WDPA_Mada %>%
+#   filter(!(NAME %in% AP_Vahatra$nom_wdpa))
+# 
+# tmap_mode("view")
+# WDPA_exclu %>%
+#   tm_shape() +
+#   tm_polygons(col = "IUCN_CAT")
 
 # On crée un grand polygone avec toutes les AP dans Vahatra
-AP_Vahatra_fusion <- st_union(AP_Vahatra)
+# AP_Vahatra_fusion <- st_union(AP_Vahatra)
 
 # On calcule pour les aires protégées de WDPA qui ne sont pas dans Vahatra
 # dans quelle mesure elles sont terrestres et pas superposées à d'autres AP

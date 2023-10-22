@@ -1,0 +1,559 @@
+---
+output: html_document
+editor_options: 
+  chunk_output_type: console
+editor: 
+  markdown: 
+    wrap: 72
+---
+
+# 1. Fondamentaux pour l'utilisation de R {#sec-fondamentaux}
+
+# Différences R et Rstudio
+
+R est un **langage de programmation** open source spécialisé dans la
+statistique et l'analyse des données. Il a été créé pour fournir un
+environnement convivial pour la manipulation, l'analyse et la
+visualisation des données.Il existe d'autres langages de programmation
+comme Python, JavaScript, Java, C++ etc.
+
+R est utilisé pour effectuer des opérations statistiques, ajuster des
+modèles, créer des graphiques et effectuer des analyses de données
+complexes.
+
+R est extrêmement flexible et extensible grâce à des packages R, qui
+ajoutent des fonctionnalités supplémentaires.
+
+RStudio est un **environnement de développement intégré (IDE)** conçu
+spécifiquement pour travailler avec le langage R. C'est un logiciel qui
+fournit une interface utilisateur plus conviviale pour écrire, exécuter
+et gérer des scripts R.
+
+RStudio inclut un éditeur de texte avec coloration syntaxique, un
+gestionnaire de packages, des fenêtres pour l'affichage des graphiques
+et des données, et bien d'autres fonctionnalités pour améliorer la
+productivité des utilisateurs R.
+
+En résumé, R est le langage de programmation sous-jacent pour l'analyse
+des données, tandis que RStudio est un environnement de développement
+qui facilite l'utilisation de R.
+
+# Sources d'apprentissage
+
+Il existe de plusieurs ressources en français pour apprendre à coder sur
+R. Nous vous recommandons en particulier :
+
+-   [Introduction à R et au
+    Tidyverse](https://juba.github.io/tidyverse/index.html)
+    [@barnier2022]
+-   [utilitR: documentation collaborative sur R de
+    l'INSEE](https://www.book.utilitr.org/index.html) [@utilitr:2022]
+
+Les bonnes ressources anglophones gratuites sont très nombreuses, très
+faciles à trouver sur le Web. Le grand classique est R for data science,
+de Grolemund et Wickham [-@grolemund2022]. On se focalise ici avec deux
+autres qui sont le plus en lien avec nos sujets :
+
+-   [Geocomputation with R, a book on geographic data
+    analysis,visualization and
+    modeling](https://geocompr.robinlovelace.net/) [@lovelace2022].
+-   [Mapme.biodiversity: Efficient Monitoring of Global Biodiversity
+    Portfolios](https://mapme-initiative.github.io/mapme.biodiversity/index.html)
+    [@görgen2022]
+
+N'hésitez pas à chercher directement sur le Web en cas de problème. Vous
+serez souvent conduits vers les forums stackoverflow ou RStudio, qui
+sont aussi des ressources très précieuses pour résoudre des problèmes
+très spécifiques.
+
+Pour vous retrouver parmi la multitude de packages existants, il existe
+une autre ressource précieuse en ligne qui pourra vous orienter
+méthodologiquement en fonction de votre domaine de recherche. Il s'agit
+de CRAN Task View : https://cran.r-project.org/web/views/.
+
+Les vues de tâches CRAN visent à fournir des recommandations sur les
+packages présents sur CRAN qui sont adaptés à un sujet spécifique. Elles
+donnent un bref aperçu des packages inclus, qui peuvent également être
+installés automatiquement à l'aide du package ctv. Les vues ont pour but
+d'avoir un focus bien défini de manière à ce qu'il soit suffisamment
+clair quels packages devraient être inclus (ou exclus) - et elles ne
+visent pas à recommander les "meilleurs" packages pour une tâche donnée.
+
+? Faire un point sur le cheat sheet (?URL) et ouverture du cheat-sheet
+base de R :
+https://iqss.github.io/dss-workshops/R/Rintro/base-r-cheat-sheet.pdf
+
+# Interface Rstudio
+
+\[Interface de Rstudio\] (R_interface_colored.png)
+
+A : fenêtre script/source B : console C : environnement D : explorateur
+
+La **fenêtre de scrip*t** permet d'éditer les fichiers scripts en vue
+d'éxécuter le code.
+
+La **console** est la fênetre où s'éxécute le code et où on peut directement
+taper des commandes. Il n'est pas obligatoire de passer par la fenêtre
+de script.
+
+Le signe ">" dans votre console est appelé "invite de commande" ou "prompt". C'est le symbole que la console utilise pour indiquer qu'elle est prête à recevoir des commandes ou des instructions de l'utilisateur. Une fois que vous voyez cet invite, vous pouvez commencer à entrer des commandes en utilisant le langage R. Après avoir entré une commande, vous appuyez sur Entrée pour l'exécuter.
+
+L'**environnement** rassemble des fonctionnalités pour suivre le
+fonctionnement de R, en faisant notamment apparaître les différents
+objets générés par notre script.
+
+L'**explorateur** permet de connaître les fichiers de notre ordinateur, de
+visualiser les rendus graphiques et cartographiqus, les différentes
+librairies et l'aide pour l'utilisation de ces dernières.
+
+# 2. Les règles de codage
+
+On se focalise ici sur quelques aspects qui peuvent être requis pour la
+manipulation du code et à la marge.
+
+# La lisibilité du code
+
+Lorsqu'on saisit une commande, que ce soit dans la console ou dans la
+fenêtre de script, les espaces autour des opérateurs n'ont pas
+d'importance.
+
+Les trois commandes suivantes sont donc équivalentes, mais on privilégie
+en général la deuxième pour des raisons de lisibilité du code.
+
+```{r}
+# Ce qui suit un dièze n'est pas exécuté. On appelle ça un commentaire.
+
+# Les trois commandes seront comprises par le code
+10+2 
+10 + 2 
+10       +       2
+```
+
+Pour les opérations plus complexes, il faut veiller à utiliser les
+parenthèses, sinon les résultats ne seront pas corrects :
+
+```{r}
+10 + 2 * 5 / 14 - 2 * 2 
+#>[1] 6.714286
+
+(10 + (2*5)) / (14 - (2 * 2))  
+```
+
+# Les différents types d'objets
+
+Les objets peuvent contenir tout un tas de données. Jusqu'ici on n'a
+stocké que des nombres, mais ils peuvent aussi contenir des chaînes de
+caractères (du texte), qu'on délimite avec des guillemets simples ou
+doubles (' ou ") :
+
+-   La chaîne de caractères
+
+```{r}
+chien <- "Chihuahua"
+chien
+#> [1] "Chihuahua"
+```
+
+Ici la variable "chien" est un objet contenant une chaîne de caractères.
+
+Un point important est relatif aux types des variables : numérique,
+catégorielles, textes, dates, spatiales... En général, les opérations ne
+peuvent concerner que des variables du même type. Les fonctions sont
+souvent contraignantes quant aux types des variables qu'elles prennent
+comme arguments.
+
+```{r ex. variables}
+# Exemple avec une variable numérique et une variable caractère
+x <- 5
+y <- "hello"
+
+# Tentative d'addition de deux variables de types différents
+#resultat <- x + y
+
+```
+
+-   Les vecteurs
+
+Les vecteurs permettent de stocker des informations de même nature dans
+un unique objet. Exemple :
+
+```{r}
+# Si on continuait à créer des objets ponctuels :
+taille1 <- 156
+taille2 <- 164
+taille3 <- 197
+taille4 <- 147
+taille5 <- 173
+(taille1 + taille2 + taille3 + taille4 + taille5) / 5
+#> [1] 167.4
+
+```
+
+Précédemment, nous avons stockés différentes valeurs chiffrées sous
+plusieurs objets qui apparaissent dans notre fenêtre d'environnement.
+
+```{r}
+tailles <- c(156, 164, 197, 147, 173)
+#> [1] 156 164 197 147 173
+```
+
+Un vecteur dans R est un objet qui peut contenir plusieurs
+**informations du même type**, potentiellement en très grand nombre.
+
+Ici la variable "tailles"est un vecteur contenant des valeurs chiffrées.
+
+Ce qui est pratique avec les vecteurs, c'est qu'on peut alors leur
+appliquer des opérations qui s'appliqueront à l'ensemble des valeurs du
+vecteur.
+
+```{r}
+# Si l'on souhaite mettre la taille en mètres : 
+
+tailles / 100 
+#> [1] 1.56 1.64 1.97 1.47 1.73
+
+tailles_m <- tailles / 100
+tailles_m
+#> [1] 1.56 1.64 1.97 1.47 1.73
+```
+
+Cela s'applique à tous les tyoes d'opérations.
+
+> Sans créer de nouvel objet, ajouter 10 cm aux tailles en centimètres
+> et multiplier au carré les tailles en mètres
+
+```{r}
+tailles + 10
+#> [1] 166 174 207 157 183
+tailles_m^2
+#> [1] 2.4336 2.6896 3.8809 2.1609 2.9929
+```
+
+On peut également appliquer des opérations spécifiques à chaque valeur à
+l'aide d'un autre vecteur :
+
+```{r}
+# Création d'un nouveau vecteur avec l'âge
+age <- c(52, 82, 19, 49, 29)
+```
+
+> En créant une nouvelle variable "age_tailles_m", calculer le ratio de
+> l'age par rapport à la taille en mètres
+
+L'Indice de Masse Corporelle se calcule de la manière
+suivante:$$ IMC = poids (kg) / (taille (m))²$$
+
+> En créant une nouvelle variable "imc", calculez le ratio pour les 5 valeurs 
+
+```{r}
+tailles <- c(156, 164, 197, 147, 173)
+poids <- c(45, 59, 110, 44, 88)
+```
+
+-   Les data.frame
+
+Un data.frame est un tableau qui peut contenir **différents types de données** (nombres, chaînes de caractères, etc.) organisées en colonnes.
+
+```{r}
+#| code-fold: false
+# On commence par créer les variables (les colonnes du tableau)
+noms <- c("John", "Jack", "Cindy", "Samantha")
+sexe <- c("homme", "homme", "femme", "femme")
+ages <- c(42, 57, 24, NA)
+poids <- c(87, 73, NA, NA)
+tailles <- c(174, 198, 192, 164)
+
+# On les rassemble dans un tableau 
+ma_table <- data.frame(noms, sexe, ages, poids, tailles)
+
+ma_table
+```
+
+# Les noms d'objets
+
+Les noms d'objets peuvent contenir des lettres, des chiffres, les
+symboles . et \_. Ils ne peuvent pas commencer par un chiffre. Attention, **R fait la différence entre minuscules et majuscules** dans
+les noms d'objets, ce qui signifie que x et X seront deux objets
+différents, tout comme resultat et Resultat.
+
+De manière générale, il est préférable d'éviter les majuscules (pour les
+risques d'erreur) et les caractères accentués (pour des questions
+d'encodage) dans les noms d'objets.
+
+De même, il faut essayer de trouver un équilibre entre clarté du nom
+(comprendre à quoi sert l'objet, ce qu'il contient) et sa longueur. Par
+exemple, on préfèrera comme nom d'objet taille_conj1 à
+taille_du_conjoint_numero_1 (trop long) ou à t1 (pas assez)
+
+# Les fonctions
+
+R est constitué de fonctions. De nombreuses fonctions prédéfinies sont
+contenues dans la base de R ou dans des packages qu'on ajoute (que l'on
+verra plus tard). La meilleure manière de comprendre ce qu'est une
+fonction est d'en créer une soi même.
+
+```{r ex fonction}
+#| code-fold: false
+# On crée une fonction "ajoute" qui prend deux paramètres. 
+# x est un premier et y est celui qu'on ajoute
+ajoute <- function(x, y) {
+  x + y
+}
+
+# On peut maintenant utiliser cette fonction
+ajoute(3, 4)
+
+# On peut effectuer les mêmes opérations. Les valeurs a et b sont encore 
+# en mémoire, donc on peut faire :
+ajoute(a, b)
+
+c <- ajoute(a, b)
+c
+
+ajoute(c, a)
+
+```
+
+Lorsque vous téléchargez un package (ou librairie), ce dernier charge en réalité un éventail de fonctions que vous pouvez explorer via l'aide. 
+
+```{r}
+# la fonction sum() est une fonction de base de R, mais d'autres opérations plus complexes sous enregistrées dans des packages spécifiques
+sum(a,b)
+```
+
+> Exercice : rendre lisible le code ci-dessous
+
+```{r}
+x <- 5*(3+2)-1
+if(x%%2==0) {print('Pair')} else{print('Impair')}
+for(i in 1:10) {if(i%%2 == 0) {print(paste('Nombre pair :', i))} else{print(paste('Nombre impair :', i))}}
+
+```
+
+# Les valeurs manquantes
+
+Les valeurs manquantes sont fréquentes dans les jeux de données. Elles notées NA dans R (certaines peuvent
+avoir pour valeur NaN). On utilise la fonction na.rm= TRUE pour les éluder dans les
+opérations simples.
+
+```{r ex. NA}
+
+# On peut reprendre le jeu de données ma_table 
+# On peut faire une moyenne sur les tailles car on a toutes les variables
+mean(ma_table$tailles)
+sum(ma_table$tailles)
+
+# Mais la moyenne ne fonctionne pas immédiatement sur les poids ou les âges
+# car il manque des variables
+mean(ma_table$ages)
+sum(ma_table$poids)
+
+```
+
+#3. Librairies R
+
+Plusieurs packages R sont utilisées pour ce projet. Les packages dans R
+sont des extensions de logiciels qui ajoutent des fonctionnalités
+spécifiques au langage R de base.
+
+Ils sont conçus pour faciliter l'analyse de données, la visualisation,
+la modélisation statistique, et bien plus encore. Les packages sont
+comme des boîtes à outils virtuelles qui permettent aux utilisateurs
+d'effectuer des tâches analytiques avancées sans avoir à réinventer la
+roue à chaque fois. Ils permettent de gagner du temps et de se
+concentrer sur la résolution de problèmes spécifiques à son domaine
+d'étude, au lieu de vous soucier de la programmation de fonctions de
+base.
+
+Lors de la rédaction de publications scientifiques, il est important de
+citer correctement les packages R utilisés dans votre analyse.
+Assurez-vous d'inclure le nom complet du package ainsi que le nom de son
+auteur ou des auteurs. Zotero et RStudio permettent aisément d'inclure
+ces citations dans votre analyse.
+
+Les autres packages mobilisés dans pour ce cours sont listés dans le
+bloc de code ci-dessous :
+
+```{r librairies}
+library("tidyverse") # Une série de packages pour faciliter la manipulation de données
+library("readxl") # Pour lire les fichiers excel (Carvalho et al. 2018)
+library("writexl") # Pour écrire des fichiers excel
+library("cowplot") # Pour arranger des graphiques en illustrations composées
+library("gt") # Pour des rendus graphiques harmonisés html et pdf/LaTeX
+library("sf") # Pour faciliter la manipulation de données géographiques
+library("wdpar") # Pour télécharger simplement la base d'aires protégées WDPA
+library("webdriver") # requis pour installer phantomjs pour wdpar
+library("tmap") # Pour produire de jolies carte
+library("geodata") # Pour télécharger simplement les frontières administratives
+library("tidygeocoder") # pour obtenir les coordo GPS d'un point à partir de son nom
+library("maptiles") # Pour télécharger des fonds de carte 
+library("mapme.biodiversity") # Acquisition et traitement des données du projet
+library("plm") # Linear Models for Panel Data and robust covariance matrices
+library("broom") # pour reformater simplement les rendus de tests statistiques
+library("stargazer") # Reformater de manière plus lisible les résumé des régressions
+library("MatchIt") # Pour le matching
+#library("glm") # Modèles linéaires généralisés (pour le PSM)
+library("optmatch") # Fonctions d'optimisation du matching
+library("did") # Méthode de double différence échelonnée de Callaway et Sant'Anna
+library("mapme.biodiversity")
+library("cobalt") # Tables et graphs d'équilibre des groupes de matching
+
+```
+
+
+# Le tidyverse
+
+Le "tidyverse" st un ensemble cohérent de packages R conçus pour la
+manipulation, la visualisation et l'analyse de données de manière
+cohérente et efficace. Il a été développé pour simplifier le flux de
+travail de l'analyse de données et pour rendre le code plus lisible et
+plus facile à comprendre.
+
+# L'opérateur pipeline
+
+Le signe `%>%` est un "tuyau". On peut le lire à haute voix comme
+"ensuite". Par exemple :
+
+```{r ex. pipe}
+#| code-fold: false
+library(tidyverse)
+
+d <- a %>%
+  ajoute(b) %>%
+  ajoute(c)
+
+```
+
+# La préparation des données avec dplyr
+
+Le "tidyverse" comprend plusieurs packages populaires, et
+notamment,**dplyr**. Ce dernier est très utile pour épurer les données
+lorsque vous travaillez sur des tableaux (et donc sur des tables
+attributaires).
+
+Il est utilisé pour la manipulation de données, notamment le filtrage,
+la sélection, le regroupement et la création de nouvelles variables.
+
+```{r ex.tidyverse}
+#| code-fold: false
+# Un exemple qui combine ces opérations
+ma_table %>%
+  filter(!is.na(ages)) 
+#consulter la sortie de l'objet
+
+ma_table %>%
+  filter(!is.na(ages)) %>%
+  select(sexe, ages, tailles, poids) 
+
+ma_table %>%
+  filter(!is.na(ages)) %>%
+  select(sexe, ages, tailles, poids) %>%
+  group_by(sexe) %>%
+  summarise(nb_pers = n())
+
+ma_table %>%
+  filter(!is.na(ages)) %>%
+  select(sexe, ages, tailles, poids) %>%
+  group_by(sexe) %>%
+  summarise(nb_pers = n(),
+            somme_poids = sum(poids, na.rm = TRUE),
+            taille_max = max(tailles, na.rm = TRUE),
+            age_moy = mean(ages, na.rm = TRUE))
+  
+# > A tibble : 2 x 5 
+#   sexe  nb_pers somme_poids taille_max age_moy
+#   <chr>   <int>       <dbl>      <dbl>   <dbl>
+# 1 femme       1           0        192    24  
+# 2 homme       2         160        198    49.5
+> 
+```
+
+Voici certaines de fonctions fondamentales du dplyr : 
+- select : choisir des colonnes 
+- filter : choisir des lignes 
+- mutate : modifier des valeurs 
+- group_by : variables pour des tris 
+- summarise : créer des filtres 
+
+> Exercice : à partir du tableau ventes_magasin, utiliser les fonctions précédentes pour réaliser les opérations suivantes : 
+
+1.  Sélectionnez uniquement les colonnes produit, quantite, et
+    prix_unitaire du data frame ventes_magasin.
+
+2.  Filtrez les lignes du data frame pour ne conserver que les ventes où
+    la quantité vendue est supérieure à 5 unités.
+
+3.  Ajoutez une nouvelle colonne nommée montant qui représente le
+    montant total de chaque vente (quantité multipliée par le prix
+    unitaire) et ajoutez-la au data frame.
+
+4.  Regroupez les données par produit pour calculer la quantité totale
+    vendue de chaque produit.
+
+5.  Filtrez les produits pour ne conserver que ceux dont la quantité
+    totale vendue est supérieure à 100 unités.
+
+
+```{r}
+# Création du data frame ventes_magasin
+
+ventes_magasin <- data.frame(
+  produit = c("Produit A", "Produit B", "Produit A", "Produit C", "Produit B", "Produit A", "Produit C", "Produit B", "Produit A"),
+  quantite = c(8, 4, 12, 6, 7, 9, 3, 11, 5),
+  prix_unitaire = c(10, 15, 8, 12, 20, 10, 18, 14, 9),
+  date_vente = as.Date(c("2023-01-05", "2023-01-08", "2023-01-09", "2023-01-10", "2023-01-15", "2023-01-20", "2023-01-25", "2023-01-30", "2023-02-02"))
+  )
+```
+
+# Les jointures
+
+Jointures : fusionner deux tableaux par une variable d'identification
+("clé")
+
+```{r ex. jointure}
+# Tableau clients
+clients <- data.frame(ID = c(1, 2, 3, 4),
+                      nom_client = c("Alice", "Bob", "Charlie", "David"))
+
+# Tableau commandes
+commandes <- data.frame(ID = c(2, 3, 1, 4),
+                        montant = c(100, 150, 50, 200))
+
+# Jointure par ID
+resultat <- inner_join(clients, commandes, by = "ID")
+
+```
+
+Cette opération exige toutefois que la **variable d'identification soit
+écrite de manière identique** dans les deux jeux de données.
+
+Supposons que l'on travaille sur les aires protégées à Madagascar et que
+l'on dispose de deux jeux de données provenant de sources différentes.
+On a alors des informations complémentaires que l'on souhaite fusionner
+en un seul tableau via le nom de l'aire protégée.
+
+Il faudra veiller à ce que les noms aient la même écriture (pas de
+différences avec des majuscules, des abréviations ou des noms
+raccourcis)
+
+# 4. Import de données 
+
+En très bref :
+
+-   Pour les fichiers excel ou csv, dans le volet "files" du panneau en
+    bas à droite de l'interface Rstudio, cliquer sur le fichier en
+    question et utiliser l'assistant d'import.
+-   Pour les autres fichiers, se référer à l'aide ou chercher sur
+    internet. Le cheat sheet"base R" présente les principales
+    importations.
+    
+# Importer table attributaires Vahatra et WDPA manuellement 
+# Comment vous auriez comparer Vahatra et WDPA ? 
+
+APRES-MIDI 
+
+#
+
+#5. Exploration des données à l'aide du tidyverse 
+
+
